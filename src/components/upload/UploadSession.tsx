@@ -549,7 +549,7 @@ const UploadSession: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
           {/* 1. Session Requirements Section - MOVED TO FIRST */}
-          <section className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+          {/* <section className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
             <h3 className="text-lg font-semibold text-blue-900 mb-4">Session Requirements</h3>
             <div className="space-y-2 text-sm text-blue-800">
               <div className="flex items-center space-x-2">
@@ -577,7 +577,7 @@ const UploadSession: React.FC = () => {
                 <span>Location or surf school must be selected</span>
               </div>
             </div>
-          </section>
+          </section> */}
 
           {/* 2. File Upload Section - MOVED TO SECOND */}
           <FileUpload onFilesChange={handleFilesChange} />
