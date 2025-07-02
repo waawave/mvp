@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Color Variables - Change these to update colors globally */
+:root {
+  --color-primary: 44, 79, 155;        /* Main blue - rgb(44, 79, 155) */
+  --color-primary-dark: 31, 63, 131;   /* Dark blue - rgb(31, 63, 131) */
+}
+
+/* Custom utility classes using our color variables */
+@layer utilities {
+  /* Background colors */
+  .bg-primary {
+    background-color: rgb(var(--color-primary));
+  }
+  
+  .bg-primary-dark {
+    background-color: rgb(var(--color-primary-dark));
+  }
+  
+  .hover\:bg-primary:hover {
+    background-color: rgb(var(--color-primary));
+  }
+  
+  .hover\:bg-primary-dark:hover {
+    background-color: rgb(var(--color-primary-dark));
+  }
+
+  /* Text colors */
+  .text-primary {
+    color: rgb(var(--color-primary));
+  }
+  
+  .text-primary-dark {
+    color: rgb(var(--color-primary-dark));
+  }
+  
+  .hover\:text-primary:hover {
+    color: rgb(var(--color-primary));
+  }
+  
+  .hover\:text-primary-dark:hover {
+    color: rgb(var(--color-primary-dark));
+  }
+
+  /* Border colors */
+  .border-primary {
+    border-color: rgb(var(--color-primary));
+  }
+  
+  .border-primary-dark {
+    border-color: rgb(var(--color-primary-dark));
+  }
+  
+  .focus\:border-primary:focus {
+    border-color: rgb(var(--color-primary));
+  }
+  
+  .focus\:border-primary-dark:focus {
+    border-color: rgb(var(--color-primary-dark));
+  }
+
+  /* Ring colors for focus states */
+  .focus\:ring-primary:focus {
+    --tw-ring-color: rgb(var(--color-primary));
+  }
+  
+  .focus\:ring-primary-dark:focus {
+    --tw-ring-color: rgb(var(--color-primary-dark));
+  }
+
+  /* Disabled states */
+  .disabled\:bg-primary:disabled {
+    background-color: rgb(var(--color-primary) / 0.5);
+  }
+
+  /* Shadow utilities */
+  .shadow-sm {
+    --tw-shadow: 0 0.5px 0.5px 0 rgb(0 0 0 / 0.05);    
+  }
+
+  /* Input styling */
+  input {
+    line-height: 2.5rem;
+    border: 1px solid rgba(0,0,0,0.6);
+    background-color: transparent;
+    padding-left: 10px;
+    font-size: 92%;
+  }
+}
