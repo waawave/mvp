@@ -97,8 +97,8 @@ const StripeOnboarding: React.FC<StripeOnboardingProps> = ({
       console.log('API URL:', 'https://xk7b-zmzz-makv.p7.xano.io/api:a9yee6L7/photographer/stripe-onboarding');
 
       const requestBody = {
-        refresh_url: `${window.location.origin}/stripe-onboarding`,
-        return_url: `${window.location.origin}/stripe-return`
+        refresh_url: `https://www.waawave.com/stripe-onboarding`,
+        return_url: `https://www.waawave.com/stripe-return`
       };
 
       console.log('Request Body:', requestBody);
