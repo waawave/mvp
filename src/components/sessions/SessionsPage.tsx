@@ -124,7 +124,7 @@ const SessionsPage: React.FC = () => {
 
         {/* Desktop Photo Credit - Bottom Right */}
         <div className="hidden md:block absolute bottom-8 right-2 md:right-6 text-white text-right">
-          <p className="text-sm md:text-base opacity-70">Photo by 
+          <p className="text-sm md:text-base opacity-70">Photos by 
 Ryan Loughlin</p>
         </div>
 
