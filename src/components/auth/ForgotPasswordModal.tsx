@@ -19,10 +19,17 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ onClose, onBa
     setLoading(true);
 
     try {
-      // Determine the correct endpoint based on user type
-      const endpoint = userType === 'photographer' 
-        ? 'https://xk7b-zmzz-makv.p7.xano.io/api:a9yee6L7/auth/photographer-forgot-password'
-        : 'https://xk7b-zmzz-makv.p7.xano.io/api:a9yee6L7/auth/surfer-forgot-password';
+      // Special handling for photographers - show contact message instead of sending email
+      if (userType === 'photographer') {
+        // Simulate a brief loading state for better UX
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setSuccess(true);
+        setLoading(false);
+        return;
+      }
+
+      // For surfers, proceed with the normal email reset flow
+      const endpoint = 'https://xk7b-zmzz-makv.p7.xano.io/api:a9yee6L7/auth/surfer-forgot-password';
 
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -53,13 +60,37 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ onClose, onBa
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Mail className="w-8 h-8 text-green-600" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Check your email</h2>
-            <p className="text-gray-600 mb-6">
-              We've sent a password reset link to <strong>{email}</strong>
-            </p>
-            <p className="text-sm text-gray-500 mb-6">
-              Didn't receive the email? Check your spam folder or try again.
-            </p>
+            
+            {userType === 'photographer' ? (
+              // Custom message for photographers
+              <>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Contact Your Waawave Team</h2>
+                <p className="text-gray-600 mb-6">
+                  Forgot your password? Get in touch with your Waawave team agent at{' '}
+                  <a 
+                    href="mailto:hello@waawave.com" 
+                    className="text-primary hover:text-primary-dark underline font-medium"
+                  >
+                    hello@waawave.com
+                  </a>
+                </p>
+                <p className="text-sm text-gray-500 mb-6">
+                  Our team will help you reset your password and get back to uploading your amazing surf photography.
+                </p>
+              </>
+            ) : (
+              // Original message for surfers
+              <>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Check your email</h2>
+                <p className="text-gray-600 mb-6">
+                  We've sent a password reset link to <strong>{email}</strong>
+                </p>
+                <p className="text-sm text-gray-500 mb-6">
+                  Didn't receive the email? Check your spam folder or try again.
+                </p>
+              </>
+            )}
+            
             <div className="space-y-3">
               <button
                 onClick={onClose}
@@ -97,7 +128,10 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ onClose, onBa
         </div>
 
         <p className="text-gray-600 mb-6 text-center">
-          Enter your email address and we'll send you a link to reset your password.
+          {userType === 'photographer' 
+            ? 'Select your account type to get help with password reset.'
+            : 'Enter your email address and we\'ll send you a link to reset your password.'
+          }
         </p>
 
         {/* User Type Selection */}
@@ -127,19 +161,33 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ onClose, onBa
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email Address
-            </label>
-            <input
-              type="email"
-              required
-              placeholder="Enter your email"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+          {userType === 'surfer' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Email Address
+              </label>
+              <input
+                type="email"
+                required
+                placeholder="Enter your email"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          )}
+
+          {userType === 'photographer' && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="text-blue-800">
+                <p className="font-medium mb-2">Photographer Password Reset</p>
+                <p className="text-sm">
+                  For security reasons, photographer password resets are handled personally by our team. 
+                  Click below to get your contact information.
+                </p>
+              </div>
+            </div>
+          )}
 
           {error && (
             <div className="text-red-600 text-sm bg-red-50 p-3 rounded-md">
@@ -149,10 +197,10 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ onClose, onBa
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || (userType === 'surfer' && !email.trim())}
             className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary-dark disabled:bg-primary disabled:opacity-50 transition-colors"
           >
-            {loading ? 'Sending...' : 'Send Reset Link'}
+            {loading ? 'Processing...' : userType === 'photographer' ? 'Get Contact Info' : 'Send Reset Link'}
           </button>
         </form>
 
