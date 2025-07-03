@@ -29,7 +29,6 @@ const PayoutDetails: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [dashboardLoading, setDashboardLoading] = useState(false);
   const [onboardingLoading, setOnboardingLoading] = useState(false);
 
   useEffect(() => {
@@ -65,25 +64,9 @@ const PayoutDetails: React.FC = () => {
     setRefreshing(false);
   };
 
-  const openStripeDashboard = async () => {
-    try {
-      setDashboardLoading(true);
-      
-      const response = await fetch('https://xk7b-zmzz-makv.p7.xano.io/api:a9yee6L7/photographer/stripe-dashboard-link', {
-        headers: { Authorization: `Bearer ${authToken}` }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to get dashboard link');
-      }
-
-      const data = await response.json();
-      window.open(data.dashboard_url, '_blank');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to open dashboard');
-    } finally {
-      setDashboardLoading(false);
-    }
+  const openStripeDashboard = () => {
+    // Redirect directly to Stripe dashboard
+    window.location.href = 'https://dashboard.stripe.com/dashboard';
   };
 
   const startOnboarding = async () => {
@@ -221,11 +204,10 @@ const PayoutDetails: React.FC = () => {
           </button>
           <button
             onClick={openStripeDashboard}
-            disabled={dashboardLoading}
-            className="flex items-center space-x-2 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark disabled:bg-primary disabled:opacity-50 transition-colors"
+            className="flex items-center space-x-2 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark transition-colors"
           >
-            <ExternalLink size={16} />
-            <span>{dashboardLoading ? 'Loading...' : 'Stripe Dashboard'}</span>
+            {/*<ExternalLink size={16} />*/}
+            <span>Stripe Dashboard</span>
           </button>
         </div>
       </div>
