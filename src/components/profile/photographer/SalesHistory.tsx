@@ -80,7 +80,17 @@ const SalesHistory: React.FC = () => {
           }
         });
 
-        setOrders(Array.from(orderMap.values()));
+        // Convert to array and sort by date (most recent first)
+        const ordersArray = Array.from(orderMap.values());
+        
+        // Sort by date of placement - most recent first
+        const sortedOrders = ordersArray.sort((a, b) => {
+          const dateA = new Date(a.dateOfPlacement).getTime();
+          const dateB = new Date(b.dateOfPlacement).getTime();
+          return dateB - dateA; // Most recent first (descending order)
+        });
+
+        setOrders(sortedOrders);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
