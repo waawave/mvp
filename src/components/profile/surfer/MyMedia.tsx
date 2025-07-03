@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
 import { formatDate } from '../../../utils/dateUtils';
 import { ArrowDown, Download } from 'lucide-react';
+import VideoPlayerModal from './VideoPlayerModal';
 
 interface Media {
   id: number;
@@ -41,6 +42,17 @@ const MyMedia: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [downloadingItems, setDownloadingItems] = useState<Set<number>>(new Set());
   const [isMobile, setIsMobile] = useState(false);
+  const [videoPlayerModal, setVideoPlayerModal] = useState<{
+    isOpen: boolean;
+    videoUrl: string;
+    videoTitle: string;
+    itemId: number;
+  }>({
+    isOpen: false,
+    videoUrl: '',
+    videoTitle: '',
+    itemId: 0
+  });
 
   // Detect if device is mobile
   useEffect(() => {
@@ -110,73 +122,63 @@ const MyMedia: React.FC = () => {
     }
   };
 
+  const getDownloadUrl = async (item: Media): Promise<string> => {
+    // Create URL with query parameter for GET request
+    const downloadUrl = new URL('https://xk7b-zmzz-makv.p7.xano.io/api:a9yee6L7/media/download');
+    downloadUrl.searchParams.append('media', item.media.preview_url);
+
+    // Make GET request to get download URL
+    const response = await fetch(downloadUrl.toString(), {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to get download URL');
+    }
+
+    const downloadData: DownloadResponse = await response.json();
+
+    // Check if URL has expired
+    if (Date.now() > downloadData.expires_at) {
+      throw new Error('Download link has expired');
+    }
+
+    return downloadData.url;
+  };
+
   const handleDownload = async (item: Media) => {
     try {
       // Add item to downloading state
       setDownloadingItems(prev => new Set(prev).add(item.id));
 
-      // Create URL with query parameter for GET request
-      const downloadUrl = new URL('https://xk7b-zmzz-makv.p7.xano.io/api:a9yee6L7/media/download');
-      downloadUrl.searchParams.append('media', item.media.preview_url);
+      const downloadUrl = await getDownloadUrl(item);
 
-      // Make GET request to get download URL
-      const response = await fetch(downloadUrl.toString(), {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${authToken}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to get download URL');
-      }
-
-      const downloadData: DownloadResponse = await response.json();
-
-      // Check if URL has expired
-      if (Date.now() > downloadData.expires_at) {
-        throw new Error('Download link has expired');
-      }
-
-      // Conditional behavior based on device type and media type
-      if (isMobile) {
-        // Mobile behavior: Different handling for videos vs images
-        if (item.media.type === 'video') {
-          // For videos on mobile: Open in new tab to allow browser controls
-          const link = document.createElement('a');
-          link.href = downloadData.url;
-          link.target = '_blank';
-          link.rel = 'noopener noreferrer';
-          
-          // Append to body, click, and remove
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        } else {
-          // For images on mobile: Direct download
-          const link = document.createElement('a');
-          link.href = downloadData.url;
-          
-          // Extract filename from the original preview URL or create a default name
-          const urlParts = item.media.preview_url.split('/');
-          const originalFilename = urlParts[urlParts.length - 1];
-          const fileExtension = '.jpg';
-          const filename = originalFilename.includes('.') 
-            ? originalFilename 
-            : `waawave_media_${item.id}${fileExtension}`;
-          
-          link.download = filename;
-          
-          // Append to body, click, and remove
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }
+      // Check if it's a video on mobile
+      if (isMobile && item.media.type === 'video') {
+        // Open video player modal
+        const videoTitle = `${item.photographer.first_name} ${item.photographer.last_name} - ${
+          item.session.surfschool_id
+            ? item.session.surfschool?.name
+            : item.session.location?.name
+        }`;
+        
+        setVideoPlayerModal({
+          isOpen: true,
+          videoUrl: downloadUrl,
+          videoTitle,
+          itemId: item.id
+        });
+      } else if (isMobile) {
+        // Mobile images: Open media URL in the same window
+        window.location.href = downloadUrl;
       } else {
-        // Desktop: Trigger download for both images and videos
+        // Desktop: Trigger download
         const link = document.createElement('a');
-        link.href = downloadData.url;
+        link.href = downloadUrl;
         
         // Extract filename from the original preview URL or create a default name
         const urlParts = item.media.preview_url.split('/');
@@ -199,13 +201,63 @@ const MyMedia: React.FC = () => {
       console.error('Download error:', err);
       alert(err instanceof Error ? err.message : 'Failed to download media');
     } finally {
-      // Remove item from downloading state
-      setDownloadingItems(prev => {
-        const newSet = new Set(prev);
-        newSet.delete(item.id);
-        return newSet;
-      });
+      // Remove item from downloading state (unless it's a video modal)
+      if (!(isMobile && item.media.type === 'video')) {
+        setDownloadingItems(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(item.id);
+          return newSet;
+        });
+      }
     }
+  };
+
+  const handleVideoDownload = async () => {
+    try {
+      const currentItem = media.find(item => item.id === videoPlayerModal.itemId);
+      if (!currentItem) return;
+
+      const downloadUrl = await getDownloadUrl(currentItem);
+      
+      // Trigger download
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      
+      // Extract filename from the original preview URL or create a default name
+      const urlParts = currentItem.media.preview_url.split('/');
+      const originalFilename = urlParts[urlParts.length - 1];
+      const filename = originalFilename.includes('.') 
+        ? originalFilename 
+        : `waawave_video_${currentItem.id}.mp4`;
+      
+      link.download = filename;
+      link.target = '_blank';
+      
+      // Append to body, click, and remove
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+    } catch (err) {
+      console.error('Video download error:', err);
+      alert(err instanceof Error ? err.message : 'Failed to download video');
+    }
+  };
+
+  const handleVideoModalClose = () => {
+    setVideoPlayerModal({
+      isOpen: false,
+      videoUrl: '',
+      videoTitle: '',
+      itemId: 0
+    });
+    
+    // Remove from downloading state
+    setDownloadingItems(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(videoPlayerModal.itemId);
+      return newSet;
+    });
   };
 
   // Video hover handlers for desktop
@@ -314,11 +366,7 @@ const MyMedia: React.FC = () => {
                         ? 'bg-gray-400 cursor-not-allowed' 
                         : 'bg-white/90 hover:bg-white'
                     }`}
-                    title={isDownloading ? 'Processing...' : 
-                      isMobile 
-                        ? (item.media.type === 'video' ? 'Open video' : 'Download image')
-                        : 'Download high-resolution file'
-                    }
+                    title={isDownloading ? 'Loading...' : isMobile && item.media.type === 'video' ? 'Play video' : isMobile ? 'Open media' : 'Download high-resolution file'}
                   >
                     {isDownloading ? (
                       <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-600"></div>
@@ -354,6 +402,16 @@ const MyMedia: React.FC = () => {
           })}
         </div>
       )}
+
+      {/* Video Player Modal */}
+      <VideoPlayerModal
+        isOpen={videoPlayerModal.isOpen}
+        onClose={handleVideoModalClose}
+        videoUrl={videoPlayerModal.videoUrl}
+        videoTitle={videoPlayerModal.videoTitle}
+        onDownload={handleVideoDownload}
+        isDownloading={downloadingItems.has(videoPlayerModal.itemId)}
+      />
     </div>
   );
 };
