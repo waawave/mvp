@@ -98,11 +98,11 @@ const SessionsPage: React.FC = () => {
       <div id="hero-section" className="relative h-screen">
         <div className="absolute inset-0">
           <img
-            src="https://waawave-previews.s3.eu-north-1.amazonaws.com/photo-1569970287880-b421ed294ab7-co%CC%81pia.png"
+            src="https://waawave-previews.s3.eu-north-1.amazonaws.com/00_ImageBanner.jpg"
             alt="Surfer in barrel wave"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-5" />
+          <div className="absolute inset-0 bg-black bg-opacity-10" />
         </div>
         
         {/* Logo and Slogan - Moved to bottom left */}
@@ -124,14 +124,13 @@ const SessionsPage: React.FC = () => {
 
         {/* Desktop Photo Credit - Bottom Right */}
         <div className="hidden md:block absolute bottom-8 right-2 md:right-6 text-white text-right">
-          <p className="text-sm md:text-base opacity-70">Photo by 
-Ryan Loughlin</p>
+          <p className="text-sm md:text-base opacity-70">Fernando Salta, photo by Vera Costa</p>
         </div>
 
         {/* Mobile Photo Credit - Bottom center, below scroll indicator */}
         <div className="md:hidden absolute bottom-2 left-1/2 transform -translate-x-1/2 text-white text-center">
-          <p className="text-sm opacity-70">Photo by Jeremy Bishop</p>
-          <p className="text-sm opacity-70">Unsplash</p>
+          <p className="text-sm opacity-70">Fernando Salta</p>
+          <p className="text-sm opacity-70">Photo by Vera Costa</p>
         </div>
       </div>
 
