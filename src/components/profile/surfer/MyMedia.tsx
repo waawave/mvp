@@ -173,7 +173,7 @@ const MyMedia: React.FC = () => {
           itemId: item.id
         });
       } else if (isMobile) {
-        // Mobile images: Open media URL in the same window
+        // Mobile images: Navigate directly to the media URL
         window.location.href = downloadUrl;
       } else {
         // Desktop: Trigger download
@@ -219,24 +219,9 @@ const MyMedia: React.FC = () => {
 
       const downloadUrl = await getDownloadUrl(currentItem);
       
-      // Trigger download
-      const link = document.createElement('a');
-      link.href = downloadUrl;
-      
-      // Extract filename from the original preview URL or create a default name
-      const urlParts = currentItem.media.preview_url.split('/');
-      const originalFilename = urlParts[urlParts.length - 1];
-      const filename = originalFilename.includes('.') 
-        ? originalFilename 
-        : `waawave_video_${currentItem.id}.mp4`;
-      
-      link.download = filename;
-      link.target = '_blank';
-      
-      // Append to body, click, and remove
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // For mobile video downloads, navigate directly to the URL
+      // This allows the mobile browser to handle the download natively
+      window.location.href = downloadUrl;
 
     } catch (err) {
       console.error('Video download error:', err);
