@@ -124,16 +124,19 @@ const EditProfile: React.FC = () => {
     setSubmitting(true);
 
     try {
+      // Set username to "none" before submitting
+      const updatedProfileData = { ...profileData, username: 'none' };
+
       // Normalize the data before sending
-      const normalizedWebsite = normalizeUrl(profileData.website);
-      const normalizedInstagram = normalizeInstagram(profileData.instagram);
+      const normalizedWebsite = normalizeUrl(updatedProfileData.website);
+      const normalizedInstagram = normalizeInstagram(updatedProfileData.instagram);
 
       // Create FormData for the request
       const formData = new FormData();
-      formData.append('first_name', profileData.first_name);
-      formData.append('last_name', profileData.last_name);
-      formData.append('username', profileData.username);
-      formData.append('location', profileData.location);
+      formData.append('first_name', updatedProfileData.first_name);
+      formData.append('last_name', updatedProfileData.last_name);
+      formData.append('username', updatedProfileData.username); // This will always be "none"
+      formData.append('location', updatedProfileData.location);
       formData.append('website', normalizedWebsite);
       formData.append('instagram', normalizedInstagram);
       
@@ -152,10 +155,10 @@ const EditProfile: React.FC = () => {
       // Debug: Log what we're sending
       console.log('=== PROFILE UPDATE DATA ===');
       console.log('Profile Data:', {
-        first_name: profileData.first_name,
-        last_name: profileData.last_name,
-        username: profileData.username,
-        location: profileData.location,
+        first_name: updatedProfileData.first_name,
+        last_name: updatedProfileData.last_name,
+        username: updatedProfileData.username,
+        location: updatedProfileData.location,
         website: normalizedWebsite,
         instagram: normalizedInstagram,
         hasSelectedFile: !!selectedFile,
@@ -302,7 +305,8 @@ const EditProfile: React.FC = () => {
             </div>
           </div>
 
-          <div className="max-w-md">
+          {/* Username field - HIDDEN */}
+          <div className="max-w-md hidden">
             <label className="block text-sm font-medium text-gray-700">
               Username
             </label>
