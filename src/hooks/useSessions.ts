@@ -23,8 +23,16 @@ export const useSessions = () => {
         }
         
         const data: SessionsResponse = await response.json();
-        setSessions(data.sessions);
-        setFilteredSessions(data.sessions);
+        
+        // Sort sessions by session_date from most recent to oldest
+        const sortedSessions = data.sessions.sort((a, b) => {
+          const dateA = new Date(a.session_date).getTime();
+          const dateB = new Date(b.session_date).getTime();
+          return dateB - dateA; // Most recent first (descending order)
+        });
+        
+        setSessions(sortedSessions);
+        setFilteredSessions(sortedSessions);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An unknown error occurred');
       } finally {
@@ -56,6 +64,13 @@ export const useSessions = () => {
         result = result.filter(session => session.tag === 'freesurf');
       }
     }
+    
+    // Maintain the date sorting after filtering
+    result.sort((a, b) => {
+      const dateA = new Date(a.session_date).getTime();
+      const dateB = new Date(b.session_date).getTime();
+      return dateB - dateA; // Most recent first (descending order)
+    });
     
     setFilteredSessions(result);
   }, [sessions, locationFilter, tagFilter]);
