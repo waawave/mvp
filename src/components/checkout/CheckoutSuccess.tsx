@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CheckCircle, Download, ArrowRight } from 'lucide-react';
+import { useCart } from '../../contexts/CartContext';
 
 const CheckoutSuccess: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { clearCart } = useCart();
   const isSuccess = searchParams.get('success') === 'true';
 
   // Redirect to home if not a success page
@@ -13,6 +15,13 @@ const CheckoutSuccess: React.FC = () => {
       navigate('/');
     }
   }, [isSuccess, navigate]);
+
+  // Clear cart on successful checkout
+  useEffect(() => {
+    if (isSuccess) {
+      clearCart();
+    }
+  }, [isSuccess, clearCart]);
 
   const handleGoToMyMedia = () => {
     navigate('/surfer/media');
