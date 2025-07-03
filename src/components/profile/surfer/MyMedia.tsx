@@ -139,25 +139,31 @@ const MyMedia: React.FC = () => {
         throw new Error('Download link has expired');
       }
 
-      // Trigger download
-      const link = document.createElement('a');
-      link.href = downloadData.url;
-      
-      // Extract filename from the original preview URL or create a default name
-      const urlParts = item.media.preview_url.split('/');
-      const originalFilename = urlParts[urlParts.length - 1];
-      const fileExtension = item.media.type === 'video' ? '.mp4' : '.jpg';
-      const filename = originalFilename.includes('.') 
-        ? originalFilename 
-        : `waawave_media_${item.id}${fileExtension}`;
-      
-      link.download = filename;
-      link.target = '_blank';
-      
-      // Append to body, click, and remove
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // Conditional behavior based on device type
+      if (isMobile) {
+        // Mobile: Open media URL in the same window
+        window.location.href = downloadData.url;
+      } else {
+        // Desktop: Trigger download
+        const link = document.createElement('a');
+        link.href = downloadData.url;
+        
+        // Extract filename from the original preview URL or create a default name
+        const urlParts = item.media.preview_url.split('/');
+        const originalFilename = urlParts[urlParts.length - 1];
+        const fileExtension = item.media.type === 'video' ? '.mp4' : '.jpg';
+        const filename = originalFilename.includes('.') 
+          ? originalFilename 
+          : `waawave_media_${item.id}${fileExtension}`;
+        
+        link.download = filename;
+        link.target = '_blank';
+        
+        // Append to body, click, and remove
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
 
     } catch (err) {
       console.error('Download error:', err);
@@ -278,7 +284,7 @@ const MyMedia: React.FC = () => {
                         ? 'bg-gray-400 cursor-not-allowed' 
                         : 'bg-white/90 hover:bg-white'
                     }`}
-                    title={isDownloading ? 'Downloading...' : 'Download high-resolution file'}
+                    title={isDownloading ? 'Downloading...' : isMobile ? 'Open media' : 'Download high-resolution file'}
                   >
                     {isDownloading ? (
                       <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-600"></div>
