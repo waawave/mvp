@@ -98,7 +98,7 @@ const SessionsPage: React.FC = () => {
       <div id="hero-section" className="relative h-screen">
         <div className="absolute inset-0">
           <img
-            src="https://waawave-previews.s3.eu-north-1.amazonaws.com/00_ImageBanner.jpg"
+            src="https://waawave-previews.s3.eu-north-1.amazonaws.com/00_ImageBanner2.jpg"
             alt="Surfer in barrel wave"
             className="w-full h-full object-cover"
           />
