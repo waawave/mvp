@@ -105,12 +105,22 @@ const SessionsPage: React.FC = () => {
           <div className="absolute inset-0 bg-black bg-opacity-10" />
         </div>
         
-        {/* Logo and Slogan - Moved to bottom left */}
-        <div className="absolute bottom-8 left-8 text-white">
+        {/* Logo and Slogan - Desktop: bottom left, Mobile: centered */}
+        <div className="absolute bottom-8 left-8 text-white hidden md:block">
           <div className="flex items-center mb-4">
             <WaawaveLogo className="w-[280px] md:w-[320px] h-auto text-white" />
           </div>
           <h1 className="text-lg md:text-xl font-light italic">Waves Worth Remembering</h1>
+        </div>
+
+        {/* Mobile Logo and Slogan - Centered vertically and horizontally */}
+        <div className="md:hidden absolute inset-0 flex flex-col items-center justify-center text-white px-8">
+          <div className="text-center">
+            <div className="flex justify-center mb-6">
+              <WaawaveLogo className="w-[280px] h-auto text-white" />
+            </div>
+            <h1 className="text-xl font-light italic">Waves Worth Remembering</h1>
+          </div>
         </div>
 
         {/* Scroll Indicator - Centered */}
