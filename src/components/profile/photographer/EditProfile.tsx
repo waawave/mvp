@@ -305,7 +305,7 @@ const EditProfile: React.FC = () => {
             </div>
           </div>
 
-          {/* Username field - HIDDEN */}
+          {/* Username field - HIDDEN and NOT REQUIRED */}
           <div className="max-w-md hidden">
             <label className="block text-sm font-medium text-gray-700">
               Username
@@ -315,7 +315,6 @@ const EditProfile: React.FC = () => {
               value={profileData.username}
               onChange={(e) => setProfileData({ ...profileData, username: e.target.value })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
-              required
             />
           </div>
 
