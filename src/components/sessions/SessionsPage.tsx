@@ -80,7 +80,7 @@ const SessionsPage: React.FC = () => {
 
         {/* Desktop Photo Credit - Bottom Right */}
         <div className="hidden md:block absolute bottom-8 right-2 md:right-6 text-white text-right">
-          <p className="text-sm md:text-base opacity-70">Fernando Salta, photo by Vera Costa</p>
+          <p className="text-sm md:text-base opacity-70">Fernando Salta · Photo by Vera Costa</p>
         </div>
 
         {/* Mobile Photo Credit - Bottom center, below scroll indicator */}
