@@ -224,7 +224,7 @@ const Navbar: React.FC = () => {
                 onClick={handleSessionsClick}
                 className={`font-medium hover:text-primary-dark transition-colors ${textClasses}`}
               >
-                Find Your Waves
+                Sessions
               </button>
               <Link to="/how-it-works" className={`font-medium hover:text-primary-dark transition-colors ${textClasses}`}>
                 How it works
@@ -445,7 +445,7 @@ const Navbar: React.FC = () => {
                 }}
                 className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-100"
               >
-                Find Your Waves
+                Sessions
               </button>
               <Link
                 to="/how-it-works"
