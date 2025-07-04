@@ -366,12 +366,7 @@ const SessionPage: React.FC = () => {
           {filteredMedia.map((item: Media) => (
             <div 
               key={item.id} 
-              className="relative group cursor-pointer select-none"
-              onClick={() => handleMediaClick(item)}
-              onContextMenu={handleContextMenu}
-              onDragStart={handleDragStart}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
+              className="relative group select-none"
               style={{
                 WebkitTouchCallout: 'none',
                 WebkitUserSelect: 'none',
@@ -386,30 +381,15 @@ const SessionPage: React.FC = () => {
               {item.type === 'video' ? (
                 <video
                   src={item.preview_url}
-                  className="w-full aspect-[4/3] object-cover rounded-lg"
+                  className="w-full aspect-[4/3] object-cover rounded-lg cursor-pointer"
                   muted
                   loop={isMobile} // Enable loop on mobile
                   playsInline
                   preload="metadata"
+                  onClick={() => handleMediaClick(item)}
                   onMouseEnter={handleVideoHover}
                   onMouseLeave={handleVideoLeave}
                   onLoadedMetadata={handleVideoLoadedMetadata}
-                  onContextMenu={handleContextMenu}
-                  onDragStart={handleDragStart}
-                  style={{ 
-                    userSelect: 'none', 
-                    WebkitUserSelect: 'none',
-                    WebkitTouchCallout: 'none',
-                    WebkitUserDrag: 'none',
-                    WebkitTapHighlightColor: 'transparent',
-                    pointerEvents: 'auto' // Allow video events
-                  }}
-                />
-              ) : (
-                <img
-                  src={item.preview_url}
-                  alt={item.media_name}
-                  className="w-full aspect-[4/3] object-cover rounded-lg pointer-events-none"
                   onContextMenu={handleContextMenu}
                   onDragStart={handleDragStart}
                   onTouchStart={handleTouchStart}
@@ -419,7 +399,27 @@ const SessionPage: React.FC = () => {
                     WebkitUserSelect: 'none',
                     WebkitTouchCallout: 'none',
                     WebkitUserDrag: 'none',
-                    WebkitTapHighlightColor: 'transparent'
+                    WebkitTapHighlightColor: 'transparent',
+                    pointerEvents: 'auto'
+                  }}
+                />
+              ) : (
+                <img
+                  src={item.preview_url}
+                  alt={item.media_name}
+                  className="w-full aspect-[4/3] object-cover rounded-lg cursor-pointer"
+                  onClick={() => handleMediaClick(item)}
+                  onContextMenu={handleContextMenu}
+                  onDragStart={handleDragStart}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                  style={{ 
+                    userSelect: 'none', 
+                    WebkitUserSelect: 'none',
+                    WebkitTouchCallout: 'none',
+                    WebkitUserDrag: 'none',
+                    WebkitTapHighlightColor: 'transparent',
+                    pointerEvents: 'auto'
                   }}
                 />
               )}

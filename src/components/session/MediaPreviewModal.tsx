@@ -195,7 +195,7 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
                 <video
                   ref={videoRef}
                   src={media.preview_url}
-                  className="max-h-[calc(100vh-200px)] max-w-full object-contain rounded-lg pointer-events-none"
+                  className="max-h-[calc(100vh-200px)] max-w-full object-contain rounded-lg"
                   controls={false}
                   autoPlay
                   loop
@@ -204,11 +204,14 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
                   preload="metadata"
                   onContextMenu={(e) => e.preventDefault()}
                   onDragStart={(e) => e.preventDefault()}
+                  onTouchStart={(e) => e.preventDefault()}
+                  onTouchEnd={(e) => e.preventDefault()}
                   style={{ 
                     userSelect: 'none', 
                     WebkitUserSelect: 'none',
                     WebkitTouchCallout: 'none',
-                    WebkitUserDrag: 'none'
+                    WebkitUserDrag: 'none',
+                    pointerEvents: 'auto'
                   }}
                   onLoadedMetadata={(e) => {
                     // Ensure video starts from beginning and plays full duration
@@ -219,14 +222,17 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
                 <img
                   src={media.preview_url}
                   alt={media.media_name}
-                  className="max-h-[calc(100vh-200px)] max-w-full object-contain rounded-lg pointer-events-none"
+                  className="max-h-[calc(100vh-200px)] max-w-full object-contain rounded-lg"
                   onContextMenu={(e) => e.preventDefault()}
                   onDragStart={(e) => e.preventDefault()}
+                  onTouchStart={(e) => e.preventDefault()}
+                  onTouchEnd={(e) => e.preventDefault()}
                   style={{ 
                     userSelect: 'none', 
                     WebkitUserSelect: 'none',
                     WebkitTouchCallout: 'none',
-                    WebkitUserDrag: 'none'
+                    WebkitUserDrag: 'none',
+                    pointerEvents: 'auto'
                   }}
                 />
               )}
@@ -363,7 +369,7 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
                 <video
                   ref={videoRef}
                   src={media.preview_url}
-                  className="w-full h-auto object-contain pointer-events-none"
+                  className="w-full h-auto object-contain"
                   controls={false}
                   autoPlay
                   loop
@@ -372,11 +378,14 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
                   preload="metadata"
                   onContextMenu={(e) => e.preventDefault()}
                   onDragStart={(e) => e.preventDefault()}
+                  onTouchStart={(e) => e.preventDefault()}
+                  onTouchEnd={(e) => e.preventDefault()}
                   style={{ 
                     userSelect: 'none', 
                     WebkitUserSelect: 'none',
                     WebkitTouchCallout: 'none',
-                    WebkitUserDrag: 'none'
+                    WebkitUserDrag: 'none',
+                    pointerEvents: 'auto'
                   }}
                   onLoadedMetadata={(e) => {
                     e.currentTarget.currentTime = 0;
@@ -386,14 +395,17 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
                 <img
                   src={media.preview_url}
                   alt={media.media_name}
-                  className="w-full h-auto object-contain pointer-events-none"
+                  className="w-full h-auto object-contain"
                   onContextMenu={(e) => e.preventDefault()}
                   onDragStart={(e) => e.preventDefault()}
+                  onTouchStart={(e) => e.preventDefault()}
+                  onTouchEnd={(e) => e.preventDefault()}
                   style={{ 
                     userSelect: 'none', 
                     WebkitUserSelect: 'none',
                     WebkitTouchCallout: 'none',
-                    WebkitUserDrag: 'none'
+                    WebkitUserDrag: 'none',
+                    pointerEvents: 'auto'
                   }}
                 />
               )}
