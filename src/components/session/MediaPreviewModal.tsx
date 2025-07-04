@@ -221,35 +221,6 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
                 />
               )}
               
-              {/* Watermark */}
-              <div 
-                className="absolute inset-0 pointer-events-none mix-blend-overlay"
-                style={{
-                  background: `repeating-linear-gradient(
-                    -45deg,
-                    rgba(255, 255, 255, 0.3),
-                    rgba(255, 255, 255, 0.3) 100px,
-                    transparent 100px,
-                    transparent 200px
-                  )`
-                }}
-              >
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <p 
-                      key={i} 
-                      className="text-white text-opacity-90 text-xl font-bold transform -rotate-45 whitespace-nowrap pointer-events-none"
-                      style={{ 
-                        textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-                        userSelect: 'none',
-                        WebkitUserSelect: 'none'
-                      }}
-                    >
-                      Waawave • {session.photographer.first_name} {session.photographer.last_name}
-                    </p>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
 
@@ -387,35 +358,6 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
                 />
               )}
               
-              {/* Mobile Watermark */}
-              <div 
-                className="absolute inset-0 pointer-events-none mix-blend-overlay"
-                style={{
-                  background: `repeating-linear-gradient(
-                    -45deg,
-                    rgba(255, 255, 255, 0.2),
-                    rgba(255, 255, 255, 0.2) 60px,
-                    transparent 60px,
-                    transparent 120px
-                  )`
-                }}
-              >
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-                  {Array.from({ length: 8 }).map((_, i) => (
-                    <p 
-                      key={i} 
-                      className="text-white text-opacity-80 text-sm font-bold transform -rotate-45 whitespace-nowrap pointer-events-none"
-                      style={{ 
-                        textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-                        userSelect: 'none',
-                        WebkitUserSelect: 'none'
-                      }}
-                    >
-                      Waawave • {session.photographer.first_name} {session.photographer.last_name}
-                    </p>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
 
