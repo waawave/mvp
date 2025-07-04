@@ -97,7 +97,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
           ctx.save();
           
           // Set watermark properties
-          ctx.globalAlpha = 0.45; // 50% opacity
+          ctx.globalAlpha = 0.40; // 50% opacity
           ctx.fillStyle = 'white';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
