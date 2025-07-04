@@ -13,9 +13,10 @@ interface UploadedFile {
 
 interface FileUploadProps {
   onFilesChange: (files: UploadedFile[]) => void;
+  photographerName: string;
 }
 
-const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName }) => {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -87,7 +88,41 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange }) => {
         canvas.width = previewWidth;
         canvas.height = previewHeight;
         
+        // Draw the image
         ctx?.drawImage(img, 0, 0, previewWidth, previewHeight);
+        
+        // Add watermark
+        if (ctx) {
+          // Save the current context state
+          ctx.save();
+          
+          // Set watermark properties
+          ctx.globalAlpha = 0.5; // 50% opacity
+          ctx.fillStyle = 'white';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          
+          // Calculate font sizes based on canvas size
+          const baseFontSize = Math.min(previewWidth, previewHeight) * 0.04; // 4% of smallest dimension
+          const mainFontSize = Math.max(16, baseFontSize);
+          const subFontSize = Math.max(12, baseFontSize * 0.75);
+          
+          // Position watermark in center
+          const centerX = previewWidth / 2;
+          const centerY = previewHeight / 2;
+          
+          // Draw main watermark text "waawave.com"
+          ctx.font = `bold ${mainFontSize}px Arial, sans-serif`;
+          ctx.fillText('waawave.com', centerX, centerY - subFontSize / 2);
+          
+          // Draw photographer credit
+          ctx.font = `${subFontSize}px Arial, sans-serif`;
+          ctx.fillText(`Photo by ${photographerName}`, centerX, centerY + mainFontSize / 2);
+          
+          // Restore the context state
+          ctx.restore();
+        }
+        
         const preview = canvas.toDataURL('image/jpeg', 0.8);
         
         resolve({

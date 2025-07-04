@@ -86,7 +86,7 @@ const ResponseModal: React.FC<ResponseModalProps> = ({ isOpen, onClose, success,
 };
 
 const UploadSession: React.FC = () => {
-  const { authToken } = useAuth();
+  const { authToken, user } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     type: 'freesurf',
@@ -523,6 +523,8 @@ const UploadSession: React.FC = () => {
   const validationErrors = getValidationErrors();
   const canPublish = validationErrors.length === 0;
 
+  // Get photographer name for watermarking
+  const photographerName = user ? `${user.first_name} ${user.last_name}` : 'Unknown Photographer';
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
       <div className="container mx-auto px-4 py-8">
@@ -580,7 +582,7 @@ const UploadSession: React.FC = () => {
           </section> */}
 
           {/* 2. File Upload Section - MOVED TO SECOND */}
-          <FileUpload onFilesChange={handleFilesChange} />
+          <FileUpload onFilesChange={handleFilesChange} photographerName={photographerName} />
 
           {/* 3. Details Section - REMAINS THIRD */}
           <section className="bg-white rounded-lg p-8 mb-6">
