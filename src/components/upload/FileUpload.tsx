@@ -97,7 +97,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
           ctx.save();
           
           // Set watermark properties
-          ctx.globalAlpha = 0.5; // 50% opacity
+          ctx.globalAlpha = 0.45; // 50% opacity
           ctx.fillStyle = 'white';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
@@ -105,7 +105,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
           // Calculate font sizes based on canvas size
           //const baseFontSize = Math.min(previewWidth, previewHeight) * 0.05; // 4% of smallest dimension
           const mainFontSize = 48; //Math.max(22, baseFontSize);
-          const subFontSize = 28; //Math.max(16, baseFontSize * 0.75);
+          const subFontSize = 24; //Math.max(16, baseFontSize * 0.75);
           
           // Position watermark in center
           const centerX = previewWidth / 2;
@@ -157,7 +157,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
         const resolutionError = validateVideoResolution(videoWidth, videoHeight);
         
         // Calculate low-resolution preview dimensions (max 240p for videos)
-        const maxPreviewHeight = 650;
+        const maxPreviewHeight = 600;
         let previewWidth, previewHeight;
         
         if (videoWidth > videoHeight) {
