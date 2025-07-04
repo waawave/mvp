@@ -51,17 +51,26 @@ const SessionsPage: React.FC = () => {
         </div>
 
         {/* Mobile Logo and Slogan - Centered vertically and horizontally */}
-        <div className="md:hidden absolute inset-0 flex flex-col items-center justify-center text-white px-8">
+        <div className="mt-16 md:hidden absolute inset-0 flex flex-col items-center justify-center text-white px-8">
           <div className="text-center">
             <div className="flex justify-center mb-6">
               <WaawaveLogo className="w-[280px] h-auto text-white" />
             </div>
             <h1 className="text-xl font-light italic">Waves Worth Remembering</h1>
+            
+            {/* Mobile Scroll Indicator - Below slogan */}
+            <div className="mt-8">
+              <div className="animate-bounce">
+                <svg className="w-6 h-6 text-white mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Scroll Indicator - Centered */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        {/* Desktop Scroll Indicator - Centered at bottom */}
+        <div className="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2">
           <div className="animate-bounce">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
@@ -76,8 +85,7 @@ const SessionsPage: React.FC = () => {
 
         {/* Mobile Photo Credit - Bottom center, below scroll indicator */}
         <div className="md:hidden absolute bottom-2 left-1/2 transform -translate-x-1/2 text-white text-center">
-          <p className="text-sm opacity-70">Fernando Salta</p>
-          <p className="text-sm opacity-70">Photo by Vera Costa</p>
+          <p className="text-sm opacity-70 whitespace-nowrap">Fernando Salta · Photo by Vera Costa</p>
         </div>
       </div>
 
