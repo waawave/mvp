@@ -42,14 +42,18 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
+      const navbarHeight = 80; // Approximate navbar height (pt-16 = 64px + padding)
       
       if (isHomePage) {
         const heroSection = document.getElementById('hero-section');
         const heroHeight = heroSection?.offsetHeight || window.innerHeight;
         
+        // Calculate when the bottom of the navbar hits the bottom of the hero
+        const transitionPoint = heroHeight - navbarHeight + 30;
+        
         if (scrollPosition === 0) {
           setScrollState('top');
-        } else if (scrollPosition < heroHeight - 100) {
+        } else if (scrollPosition < transitionPoint) {
           setScrollState('partial');
         } else {
           setScrollState('full');
@@ -117,13 +121,6 @@ const Navbar: React.FC = () => {
     } else {
       // If on different page, navigate to homepage and then scroll
       navigate('/sessions');
-      // Use setTimeout to ensure navigation completes before scrolling
-      setTimeout(() => {
-        const filtersSection = document.getElementById('filters-section');
-        if (filtersSection) {
-          filtersSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
     }
   };
 

@@ -29,69 +29,6 @@ const SessionsPage: React.FC = () => {
     formatTime
   } = useSessions();
 
-  const lastScrollY = useRef(0);
-  const isScrolling = useRef(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (isScrolling.current) return;
-
-      const heroSection = document.getElementById('hero-section');
-      const filtersSection = document.getElementById('filters-section');
-      
-      if (!heroSection || !filtersSection) return;
-      
-      const heroHeight = heroSection.offsetHeight;
-      const scrollPosition = window.scrollY;
-      const scrollDirection = scrollPosition > lastScrollY.current ? 'down' : 'up';
-      const scrollDelta = Math.abs(scrollPosition - lastScrollY.current);
-      
-      // Only trigger if scroll delta is significant (prevents tiny movements)
-      if (scrollDelta < 5) {
-        lastScrollY.current = scrollPosition;
-        return;
-      }
-      
-      // IMMEDIATE SCROLL TRIGGER - as soon as user scrolls down from top
-      if (scrollDirection === 'down') {
-        // If user is at the top (within 50px) and scrolls down, immediately go to filters
-        if (scrollPosition > 50 && scrollPosition < heroHeight - 50) {
-          isScrolling.current = true;
-          window.scrollTo({
-            top: heroHeight,
-            behavior: 'smooth'
-          });
-          
-          setTimeout(() => {
-            isScrolling.current = false;
-          }, 600);
-        }
-      } else if (scrollDirection === 'up') {
-        // When scrolling up: if in the filters section but close to hero, snap back to top
-        if (scrollPosition >= heroHeight && scrollPosition < heroHeight + 200) {
-          isScrolling.current = true;
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
-          
-          setTimeout(() => {
-            isScrolling.current = false;
-          }, 600);
-        }
-      }
-      
-      lastScrollY.current = scrollPosition;
-    };
-
-    // Add scroll listener with passive option for better performance
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
     <>
       {/* Hero Banner */}
