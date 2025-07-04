@@ -98,7 +98,7 @@ const HowItWorksPage: React.FC = () => {
             <div className="relative">
               <div className="aspect-[4/3] bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl overflow-hidden">
                 <img
-                  src="https://waawave-previews.s3.eu-north-1.amazonaws.com/photo-1596755919270-bb122ed1e55e.avif"
+                  src="https://waawave-previews.s3.eu-north-1.amazonaws.com/kvnga-M_972qLb_cU-unsplash.jpg"
                   alt="Surf photographer in action"
                   className="w-full h-full object-cover"
                 />
@@ -116,7 +116,7 @@ const HowItWorksPage: React.FC = () => {
             <div className="relative order-2 lg:order-1">
               <div className="aspect-[4/3] bg-gradient-to-br from-green-100 to-blue-200 rounded-2xl overflow-hidden">
                 <img
-                  src="https://waawave-previews.s3.eu-north-1.amazonaws.com/photo-1742863026223-2ae8942d42a6.avif"
+                  src="https://waawave-previews.s3.eu-north-1.amazonaws.com/macourt-media-mF8P3_yenjQ-unsplash.jpg"
                   alt="Surfer riding a wave"
                   className="w-full h-full object-cover"
                 />
