@@ -96,8 +96,8 @@ const Navbar: React.FC = () => {
   };
 
   const textClasses = isHomePage && scrollState !== 'full' ? 'text-white' : 'text-gray-600';
-  const logoTextClasses = isHomePage && scrollState !== 'full' ? 'text-white' : 'text-primary-dark';
-  const logoIconClasses = isHomePage && scrollState !== 'full' ? 'text-white' : 'text-primary';
+  const logoTextClasses = isHomePage && scrollState !== 'full' ? 'text-white' : 'text-black';
+  const logoIconClasses = isHomePage && scrollState !== 'full' ? 'text-white' : 'text-black';
 
   const handleCartClick = () => {
     if (!user) {

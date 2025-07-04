@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
             {/* Company Info */}
             <div>
               <Link to="/" className="flex items-center text-2xl font-bold text-blue-900 mb-4">
-                <WaawaveLogo className="h-5 text-blue-600" />
+                <WaawaveLogo className="h-5 text-black" />
               </Link>
               <p className="text-gray-600 italic">Waves worth remembering.</p>
             </div>
