@@ -157,7 +157,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
         const resolutionError = validateVideoResolution(videoWidth, videoHeight);
         
         // Calculate low-resolution preview dimensions (max 240p for videos)
-        const maxPreviewHeight = 240;
+        const maxPreviewHeight = 320;
         let previewWidth, previewHeight;
         
         if (videoWidth > videoHeight) {
