@@ -157,27 +157,31 @@ const SessionPage: React.FC = () => {
 
   // Prevent right-click on media items (but allow video events)
   const handleContextMenu = (e: React.MouseEvent) => {
-    e.preventDefault();
-    return false;
+    if (!isMobile) {
+      e.preventDefault();
+      return false;
+    }
   };
 
   // Prevent drag start on media items (but allow video events)
   const handleDragStart = (e: React.DragEvent) => {
-    e.preventDefault();
-    return false;
+    if (!isMobile) {
+      e.preventDefault();
+      return false;
+    }
   };
 
   // Mobile-specific touch event handlers (but allow video events)
   const handleTouchStart = (e: React.TouchEvent) => {
-    // Only prevent if it's not a video element
-    if (!(e.target as HTMLElement).closest('video')) {
+    // On mobile, don't prevent touch events to allow normal interaction
+    if (!isMobile) {
       e.preventDefault();
     }
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    // Only prevent if it's not a video element
-    if (!(e.target as HTMLElement).closest('video')) {
+    // On mobile, don't prevent touch events to allow normal interaction
+    if (!isMobile) {
       e.preventDefault();
     }
   };
@@ -366,60 +370,60 @@ const SessionPage: React.FC = () => {
           {filteredMedia.map((item: Media) => (
             <div 
               key={item.id} 
-              className="relative group select-none"
+              className={`relative group ${isMobile ? 'cursor-pointer' : 'cursor-pointer select-none'}`}
+              onClick={() => handleMediaClick(item)}
+              onContextMenu={handleContextMenu}
+              onDragStart={handleDragStart}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
               style={{
-                WebkitTouchCallout: 'none',
-                WebkitUserSelect: 'none',
-                KhtmlUserSelect: 'none',
-                MozUserSelect: 'none',
-                msUserSelect: 'none',
-                userSelect: 'none',
-                WebkitUserDrag: 'none',
-                WebkitTapHighlightColor: 'transparent'
+                ...(isMobile ? {} : {
+                  WebkitTouchCallout: 'none',
+                  WebkitUserSelect: 'none',
+                  KhtmlUserSelect: 'none',
+                  MozUserSelect: 'none',
+                  msUserSelect: 'none',
+                  userSelect: 'none',
+                  WebkitUserDrag: 'none',
+                  WebkitTapHighlightColor: 'transparent'
+                })
               }}
             >
               {item.type === 'video' ? (
                 <video
                   src={item.preview_url}
-                  className="w-full aspect-[4/3] object-cover rounded-lg cursor-pointer"
+                  className="w-full aspect-[4/3] object-cover rounded-lg"
                   muted
                   loop={isMobile} // Enable loop on mobile
                   playsInline
                   preload="metadata"
-                  onClick={() => handleMediaClick(item)}
                   onMouseEnter={handleVideoHover}
                   onMouseLeave={handleVideoLeave}
                   onLoadedMetadata={handleVideoLoadedMetadata}
-                  onContextMenu={handleContextMenu}
-                  onDragStart={handleDragStart}
-                  onTouchStart={handleTouchStart}
-                  onTouchEnd={handleTouchEnd}
                   style={{ 
-                    userSelect: 'none', 
-                    WebkitUserSelect: 'none',
-                    WebkitTouchCallout: 'none',
-                    WebkitUserDrag: 'none',
-                    WebkitTapHighlightColor: 'transparent',
-                    pointerEvents: 'auto'
+                    ...(isMobile ? {} : {
+                      userSelect: 'none', 
+                      WebkitUserSelect: 'none',
+                      WebkitTouchCallout: 'none',
+                      WebkitUserDrag: 'none',
+                      WebkitTapHighlightColor: 'transparent'
+                    }),
+                    pointerEvents: 'auto' // Allow video events
                   }}
                 />
               ) : (
                 <img
                   src={item.preview_url}
                   alt={item.media_name}
-                  className="w-full aspect-[4/3] object-cover rounded-lg cursor-pointer"
-                  onClick={() => handleMediaClick(item)}
-                  onContextMenu={handleContextMenu}
-                  onDragStart={handleDragStart}
-                  onTouchStart={handleTouchStart}
-                  onTouchEnd={handleTouchEnd}
+                  className="w-full aspect-[4/3] object-cover rounded-lg"
                   style={{ 
-                    userSelect: 'none', 
-                    WebkitUserSelect: 'none',
-                    WebkitTouchCallout: 'none',
-                    WebkitUserDrag: 'none',
-                    WebkitTapHighlightColor: 'transparent',
-                    pointerEvents: 'auto'
+                    ...(isMobile ? {} : {
+                      userSelect: 'none', 
+                      WebkitUserSelect: 'none',
+                      WebkitTouchCallout: 'none',
+                      WebkitUserDrag: 'none',
+                      WebkitTapHighlightColor: 'transparent'
+                    })
                   }}
                 />
               )}
