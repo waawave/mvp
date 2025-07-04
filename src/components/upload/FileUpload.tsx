@@ -78,10 +78,10 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
         // Calculate preview dimensions (450px max width/height, maintain ratio)
         let previewWidth, previewHeight;
         if (originalWidth > originalHeight) {
-          previewWidth = Math.min(400, originalWidth);
+          previewWidth = Math.min(600, originalWidth);
           previewHeight = (originalHeight * previewWidth) / originalWidth;
         } else {
-          previewHeight = Math.min(400, originalHeight);
+          previewHeight = Math.min(600, originalHeight);
           previewWidth = (originalWidth * previewHeight) / originalHeight;
         }
         
@@ -103,9 +103,9 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
           ctx.textBaseline = 'middle';
           
           // Calculate font sizes based on canvas size
-          const baseFontSize = Math.min(previewWidth, previewHeight) * 0.05; // 4% of smallest dimension
-          const mainFontSize = Math.max(22, baseFontSize);
-          const subFontSize = Math.max(16, baseFontSize * 0.75);
+          //const baseFontSize = Math.min(previewWidth, previewHeight) * 0.05; // 4% of smallest dimension
+          const mainFontSize = 26; //Math.max(22, baseFontSize);
+          const subFontSize = 20; //Math.max(16, baseFontSize * 0.75);
           
           // Position watermark in center
           const centerX = previewWidth / 2;
@@ -157,7 +157,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
         const resolutionError = validateVideoResolution(videoWidth, videoHeight);
         
         // Calculate low-resolution preview dimensions (max 240p for videos)
-        const maxPreviewHeight = 320;
+        const maxPreviewHeight = 540;
         let previewWidth, previewHeight;
         
         if (videoWidth > videoHeight) {
