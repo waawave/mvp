@@ -78,10 +78,10 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
         // Calculate preview dimensions (450px max width/height, maintain ratio)
         let previewWidth, previewHeight;
         if (originalWidth > originalHeight) {
-          previewWidth = Math.min(450, originalWidth);
+          previewWidth = Math.min(400, originalWidth);
           previewHeight = (originalHeight * previewWidth) / originalWidth;
         } else {
-          previewHeight = Math.min(450, originalHeight);
+          previewHeight = Math.min(400, originalHeight);
           previewWidth = (originalWidth * previewHeight) / originalHeight;
         }
         
@@ -97,15 +97,15 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
           ctx.save();
           
           // Set watermark properties
-          ctx.globalAlpha = 0.5; // 50% opacity
+          ctx.globalAlpha = 0.4; // 50% opacity
           ctx.fillStyle = 'white';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           
           // Calculate font sizes based on canvas size
-          const baseFontSize = Math.min(previewWidth, previewHeight) * 0.04; // 4% of smallest dimension
-          const mainFontSize = Math.max(16, baseFontSize);
-          const subFontSize = Math.max(12, baseFontSize * 0.75);
+          const baseFontSize = Math.min(previewWidth, previewHeight) * 0.05; // 4% of smallest dimension
+          const mainFontSize = Math.max(22, baseFontSize);
+          const subFontSize = Math.max(16, baseFontSize * 0.75);
           
           // Position watermark in center
           const centerX = previewWidth / 2;
