@@ -496,6 +496,7 @@ const SessionPage: React.FC = () => {
           onNext={handleNextMedia}
           isInCart={isInCart(selectedMedia.id)}
           onToggleCart={toggleCart}
+          onShare={handleShare}
         />
       )}
 

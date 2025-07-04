@@ -12,6 +12,7 @@ interface MediaPreviewModalProps {
   onNext: () => void;
   isInCart: boolean;
   onToggleCart: (media: Media) => void;
+  onShare: () => void;
 }
 
 const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
@@ -22,6 +23,7 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
   onNext,
   isInCart,
   onToggleCart,
+  onShare,
 }) => {
   const { user } = useAuth();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -38,93 +40,82 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
   }, [media]);
 
   useEffect(() => {
-    // Disable right-click context menu
-    const handleContextMenu = (e: MouseEvent) => {
-      e.preventDefault();
-      return false;
-    };
-
-    // Disable print screen and other screenshot shortcuts
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Disable Print Screen
-      if (e.key === 'PrintScreen') {
+    // Check if device is mobile
+    const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window;
+    
+    // Only apply prevention mechanisms on desktop
+    if (!isMobile) {
+      // Disable right-click context menu
+      const handleContextMenu = (e: MouseEvent) => {
         e.preventDefault();
         return false;
-      }
-      
-      // Disable Ctrl+Shift+S (screenshot on some browsers)
-      if (e.ctrlKey && e.shiftKey && e.key === 'S') {
+      };
+
+      // Disable print screen and other screenshot shortcuts
+      const handleKeyDown = (e: KeyboardEvent) => {
+        // Disable Print Screen
+        if (e.key === 'PrintScreen') {
+          e.preventDefault();
+          return false;
+        }
+        
+        // Disable Ctrl+Shift+S (screenshot on some browsers)
+        if (e.ctrlKey && e.shiftKey && e.key === 'S') {
+          e.preventDefault();
+          return false;
+        }
+        
+        // Disable F12 (Developer Tools)
+        if (e.key === 'F12') {
+          e.preventDefault();
+          return false;
+        }
+        
+        // Disable Ctrl+Shift+I (Developer Tools)
+        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+          e.preventDefault();
+          return false;
+        }
+        
+        // Disable Ctrl+U (View Source)
+        if (e.ctrlKey && e.key === 'u') {
+          e.preventDefault();
+          return false;
+        }
+        
+        // Disable Ctrl+S (Save Page)
+        if (e.ctrlKey && e.key === 's') {
+          e.preventDefault();
+          return false;
+        }
+      };
+
+      // Disable drag and drop
+      const handleDragStart = (e: DragEvent) => {
         e.preventDefault();
         return false;
-      }
-      
-      // Disable F12 (Developer Tools)
-      if (e.key === 'F12') {
+      };
+
+      // Disable text selection
+      const handleSelectStart = (e: Event) => {
         e.preventDefault();
         return false;
-      }
-      
-      // Disable Ctrl+Shift+I (Developer Tools)
-      if (e.ctrlKey && e.shiftKey && e.key === 'I') {
-        e.preventDefault();
-        return false;
-      }
-      
-      // Disable Ctrl+U (View Source)
-      if (e.ctrlKey && e.key === 'u') {
-        e.preventDefault();
-        return false;
-      }
-      
-      // Disable Ctrl+S (Save Page)
-      if (e.ctrlKey && e.key === 's') {
-        e.preventDefault();
-        return false;
-      }
-    };
+      };
 
-    // Disable drag and drop
-    const handleDragStart = (e: DragEvent) => {
-      e.preventDefault();
-      return false;
-    };
+      // Add event listeners only for desktop
+      document.addEventListener('contextmenu', handleContextMenu);
+      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('dragstart', handleDragStart);
+      document.addEventListener('selectstart', handleSelectStart);
 
-    // Disable text selection
-    const handleSelectStart = (e: Event) => {
-      e.preventDefault();
-      return false;
-    };
-
-    // Mobile-specific touch event handlers
-    const handleTouchStart = (e: TouchEvent) => {
-      // Prevent long press context menu on mobile
-      if (e.touches.length > 1) {
-        e.preventDefault();
-      }
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      // Prevent any touch-based save actions
-      e.preventDefault();
-    };
-
-    // Add event listeners
-    document.addEventListener('contextmenu', handleContextMenu);
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('dragstart', handleDragStart);
-    document.addEventListener('selectstart', handleSelectStart);
-    document.addEventListener('touchstart', handleTouchStart, { passive: false });
-    document.addEventListener('touchend', handleTouchEnd, { passive: false });
-
-    // Cleanup event listeners
-    return () => {
-      document.removeEventListener('contextmenu', handleContextMenu);
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('dragstart', handleDragStart);
-      document.removeEventListener('selectstart', handleSelectStart);
-      document.removeEventListener('touchstart', handleTouchStart);
-      document.removeEventListener('touchend', handleTouchEnd);
-    };
+      // Cleanup event listeners
+      return () => {
+        document.removeEventListener('contextmenu', handleContextMenu);
+        document.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('dragstart', handleDragStart);
+        document.removeEventListener('selectstart', handleSelectStart);
+      };
+    }
   }, []);
 
   const formatFileSize = (bytes: number) => {
@@ -162,11 +153,14 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
         <div className="absolute top-4 left-4 right-4 flex justify-between z-10">
           <button 
             onClick={onClose}
-            className="text-gray-600 hover:text-gray-800 transition-colors"
+            className="text-gray-600 hover:text-gray-800 transition-colors p-2 bg-white/20 backdrop-blur-sm rounded-full"
           >
             <X size={24} />
           </button>
-          <button className="text-gray-600 hover:text-gray-800 transition-colors">
+          <button 
+            onClick={onShare}
+            className="text-gray-600 hover:text-gray-800 transition-colors p-2 bg-white/20 backdrop-blur-sm rounded-full"
+          >
             <Share2 size={24} />
           </button>
         </div>
@@ -202,16 +196,11 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
                   muted
                   playsInline
                   preload="metadata"
-                  onContextMenu={(e) => e.preventDefault()}
-                  onDragStart={(e) => e.preventDefault()}
-                  onTouchStart={(e) => e.preventDefault()}
-                  onTouchEnd={(e) => e.preventDefault()}
                   style={{ 
                     userSelect: 'none', 
                     WebkitUserSelect: 'none',
                     WebkitTouchCallout: 'none',
                     WebkitUserDrag: 'none',
-                    pointerEvents: 'auto'
                   }}
                   onLoadedMetadata={(e) => {
                     // Ensure video starts from beginning and plays full duration
@@ -223,16 +212,11 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
                   src={media.preview_url}
                   alt={media.media_name}
                   className="max-h-[calc(100vh-200px)] max-w-full object-contain rounded-lg"
-                  onContextMenu={(e) => e.preventDefault()}
-                  onDragStart={(e) => e.preventDefault()}
-                  onTouchStart={(e) => e.preventDefault()}
-                  onTouchEnd={(e) => e.preventDefault()}
                   style={{ 
                     userSelect: 'none', 
                     WebkitUserSelect: 'none',
                     WebkitTouchCallout: 'none',
                     WebkitUserDrag: 'none',
-                    pointerEvents: 'auto'
                   }}
                 />
               )}
@@ -339,10 +323,13 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
           >
             <X size={24} />
           </button>
-          <div className="flex items-center space-x-2">
+          <button 
+            onClick={onShare}
+            className="flex items-center space-x-2 text-gray-600 hover:text-gray-800 transition-colors"
+          >
             <Share2 size={20} />
             <span className="text-gray-600">Share</span>
-          </div>
+          </button>
         </div>
 
         {/* Mobile Content - Scrollable */}
@@ -376,16 +363,11 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
                   muted
                   playsInline
                   preload="metadata"
-                  onContextMenu={(e) => e.preventDefault()}
-                  onDragStart={(e) => e.preventDefault()}
-                  onTouchStart={(e) => e.preventDefault()}
-                  onTouchEnd={(e) => e.preventDefault()}
                   style={{ 
                     userSelect: 'none', 
                     WebkitUserSelect: 'none',
                     WebkitTouchCallout: 'none',
                     WebkitUserDrag: 'none',
-                    pointerEvents: 'auto'
                   }}
                   onLoadedMetadata={(e) => {
                     e.currentTarget.currentTime = 0;
@@ -396,16 +378,11 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
                   src={media.preview_url}
                   alt={media.media_name}
                   className="w-full h-auto object-contain"
-                  onContextMenu={(e) => e.preventDefault()}
-                  onDragStart={(e) => e.preventDefault()}
-                  onTouchStart={(e) => e.preventDefault()}
-                  onTouchEnd={(e) => e.preventDefault()}
                   style={{ 
                     userSelect: 'none', 
                     WebkitUserSelect: 'none',
                     WebkitTouchCallout: 'none',
                     WebkitUserDrag: 'none',
-                    pointerEvents: 'auto'
                   }}
                 />
               )}
@@ -501,19 +478,22 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
       </div>
 
       {/* Additional protection overlay */}
-      <div 
-        className="absolute inset-0 pointer-events-none z-0"
-        style={{
-          background: 'transparent',
-          userSelect: 'none',
-          WebkitUserSelect: 'none',
-          WebkitTouchCallout: 'none',
-          WebkitUserDrag: 'none',
-          KhtmlUserSelect: 'none',
-          MozUserSelect: 'none',
-          msUserSelect: 'none'
-        }}
-      />
+      {/* Only show protection overlay on desktop */}
+      {typeof window !== 'undefined' && window.innerWidth > 768 && !('ontouchstart' in window) && (
+        <div 
+          className="absolute inset-0 pointer-events-none z-0"
+          style={{
+            background: 'transparent',
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
+            WebkitTouchCallout: 'none',
+            WebkitUserDrag: 'none',
+            KhtmlUserSelect: 'none',
+            MozUserSelect: 'none',
+            msUserSelect: 'none'
+          }}
+        />
+      )}
 
       {/* Photographer Conflict Modal */}
       <PhotographerConflictModal />
