@@ -36,7 +36,7 @@ const HowItWorksPage: React.FC = () => {
       <section className="py-16 px-4">
         <div className="container mx-auto text-center max-w-4xl">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            How Waawave works
+            Ho Waawave works
           </h1>
           <p className="text-lg text-gray-600 leading-relaxed">
             Waawave makes it easy for photographers to sell their surf shots and for surfers to find and purchase high-quality photos and videos of their sessions
