@@ -151,7 +151,7 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
           <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-12 text-center">
             <div className="max-w-md space-y-6">
               <p className="text-lg leading-relaxed">
-                To ensure the best experience for our early community and keep the platform running smoothly, we're inviting photographers gradually.
+                To ensure the smoothest experience for our early community, we're inviting photographers gradually.
               </p>
               <p className="text-lg leading-relaxed">
                 Leave your details — we'll personally get in touch as soon as we're ready to bring you on board.
@@ -323,8 +323,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
 
       {/* Mobile Layout - Vertical Scroll */}
       <div className="md:hidden h-full max-h-full overflow-y-auto">
-        {/* First Section - Image with Text (Full Screen) */}
-        <div className="h-screen relative flex items-center justify-center">
+        {/* First Section - Image with Text (Slightly More Than Half Screen) */}
+        <div className="h-[60vh] relative flex items-center justify-center">
           <img
             src="https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg"
             alt="Abstract ocean water"
@@ -343,9 +343,9 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
           {/* Content */}
           <div className="relative z-10 text-center text-white px-6">
             <h1 className="text-3xl font-bold mb-8">waawave</h1>
-            <div className="space-y-6 mb-12">
+            <div className="space-y-6 mb-16">
               <p className="text-lg leading-relaxed">
-                To ensure the best experience for our early community and keep the platform running smoothly, we're inviting photographers gradually.
+                To ensure the smoothest experience for our early community, we're inviting photographers gradually.
               </p>
               <p className="text-lg leading-relaxed">
                 Leave your details — we'll personally get in touch as soon as we're ready to bring you on board.
@@ -353,7 +353,7 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
             </div>
             
             {/* Scroll indicator */}
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+            <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
               <div className="animate-bounce">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
@@ -363,8 +363,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
           </div>
         </div>
 
-        {/* Second Section - Form (Full Screen) */}
-        <div className="min-h-screen bg-white flex items-center justify-center p-6">
+        {/* Second Section - Form */}
+        <div className="bg-white flex items-center justify-center p-6">
           <div className="w-full max-w-sm">
             <div className="text-center mb-6">
               <h1 className="text-2xl font-bold text-gray-900">Join our Waitlist</h1>

@@ -231,8 +231,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
 
       {/* Mobile Layout - Vertical Scroll */}
       <div className="md:hidden h-full max-h-full overflow-y-auto">
-        {/* First Section - Image (Full Screen) */}
-        <div className="h-screen relative flex items-center justify-center">
+        {/* First Section - Image (Half Screen) */}
+        <div className="h-1/2 relative flex items-center justify-center">
           <img
             src="https://images.pexels.com/photos/390051/surfer-wave-sunset-the-indian-ocean-390051.jpeg"
             alt="Surfer riding a wave"
@@ -264,8 +264,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
           </div>
         </div>
 
-        {/* Second Section - Form (Full Screen) */}
-        <div className="min-h-screen bg-white flex items-center justify-center p-6">
+        {/* Second Section - Form */}
+        <div className="bg-white flex items-center justify-center p-6">
           <div className="w-full max-w-sm">
             <div className="text-center mb-6">
               <h1 className="text-2xl font-bold text-gray-900">Surfer Sign Up</h1>
