@@ -194,7 +194,7 @@ const PhotographerPage: React.FC = () => {
 
       {/* Sessions Count - Updated to show live vs total sessions */}
       <div className="container mx-auto px-4 mb-6">
-        <p className="text-gray-500">
+        <p className="text-gray-500 text-center md:text-left">
           {liveSessions} Live Sessions · {totalSessions} Published Sessions
         </p>
       </div>
