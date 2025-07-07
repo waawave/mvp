@@ -435,7 +435,7 @@ const CartPage: React.FC = () => {
 
       {/* Email Confirmation Modal */}
       <EmailConfirmationModal
-        isOpen={showEmailConfirmationModal}
+        show={showEmailConfirmationModal}
         onClose={() => setShowEmailConfirmationModal(false)}
         onConfirm={handleEmailConfirmed}
       />

@@ -166,10 +166,8 @@ const Navbar: React.FC = () => {
 
   // Cart icon components
   const EmptyCartIcon = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="9" cy="21" r="1"></circle>
-      <circle cx="20" cy="21" r="1"></circle>
-      <path d="m1 1 4 4 2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0.832031 0.833313H4.16536L6.3987 11.9916C6.4749 12.3753 6.68362 12.7199 6.98832 12.9652C7.29302 13.2105 7.67428 13.3408 8.06536 13.3333H16.1654C16.5564 13.3408 16.9377 13.2105 17.2424 12.9652C17.5471 12.7199 17.7558 12.3753 17.832 11.9916L19.1654 4.99998H4.9987M8.33203 17.5C8.33203 17.9602 7.95894 18.3333 7.4987 18.3333C7.03846 18.3333 6.66536 17.9602 6.66536 17.5C6.66536 17.0397 7.03846 16.6666 7.4987 16.6666C7.95894 16.6666 8.33203 17.0397 8.33203 17.5ZM17.4987 17.5C17.4987 17.9602 17.1256 18.3333 16.6654 18.3333C16.2051 18.3333 15.832 17.9602 15.832 17.5C15.832 17.0397 16.2051 16.6666 16.6654 16.6666C17.1256 16.6666 17.4987 17.0397 17.4987 17.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 
