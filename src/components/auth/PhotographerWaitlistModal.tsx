@@ -343,22 +343,13 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
           {/* Content */}
           <div className="relative z-10 text-center text-white px-6">
             <h1 className="text-3xl font-bold mb-8">waawave</h1>
-            <div className="space-y-6 mb-16">
+            <div className="space-y-6">
               <p className="text-lg leading-relaxed">
                 To ensure the smoothest experience for our early community, we're inviting photographers gradually.
               </p>
               <p className="text-lg leading-relaxed">
                 Leave your details — we'll personally get in touch as soon as we're ready to bring you on board.
               </p>
-            </div>
-            
-            {/* Scroll indicator */}
-            <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
-              <div className="animate-bounce">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                </svg>
-              </div>
             </div>
           </div>
         </div>
