@@ -111,7 +111,7 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
 
   if (success) {
     return (
-      <div className="fixed inset-0 bg-white z-50 flex items-center justify-center overflow-hidden">
+      <div className="fixed inset-0 h-screen w-screen bg-white z-50 flex items-center justify-center overflow-hidden">
         <div className="text-center">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,7 +126,7 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
   }
 
   return (
-    <div className="fixed inset-0 bg-white z-50 overflow-hidden">
+    <div className="fixed inset-0 h-screen w-screen bg-white z-50 overflow-hidden">
       {/* Desktop Layout - Side by Side */}
       <div className="hidden md:flex h-full">
         {/* Left Half - Abstract Sea Water Image with Text */}
@@ -166,7 +166,7 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
         </div>
 
         {/* Right Half - Waitlist Form */}
-        <div className="w-1/2 flex items-center justify-center p-8 overflow-hidden">
+        <div className="w-1/2 flex items-center justify-center p-8 max-h-full overflow-y-auto">
           <div className="w-full max-w-sm">
             {/* Form Title */}
             <div className="text-center mb-8">
@@ -183,7 +183,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
                   <input
                     type="text"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                    style={{ touchAction: 'manipulation' }}
                     value={formData.first_name}
                     onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
                   />
@@ -195,7 +196,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
                   <input
                     type="text"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                    style={{ touchAction: 'manipulation' }}
                     value={formData.last_name}
                     onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
                   />
@@ -210,7 +212,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
                 <input
                   type="email"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
@@ -224,7 +227,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
                 <input
                   type="tel"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.phone_number}
                   onChange={(e) => setFormData({ ...formData, phone_number: e.target.value })}
                 />
@@ -238,7 +242,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
                 <input
                   type="text"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 />
@@ -255,7 +260,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
                 <input
                   type="text"
                   placeholder="www.your-portfolio.com"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.url}
                   onChange={(e) => setFormData({ ...formData, url: e.target.value })}
                 />
@@ -316,7 +322,7 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
       </div>
 
       {/* Mobile Layout - Vertical Scroll */}
-      <div className="md:hidden h-full overflow-y-auto">
+      <div className="md:hidden h-full max-h-full overflow-y-auto">
         {/* First Section - Image with Text (Full Screen) */}
         <div className="h-screen relative flex items-center justify-center">
           <img
@@ -374,7 +380,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
                   <input
                     type="text"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                    style={{ touchAction: 'manipulation' }}
                     value={formData.first_name}
                     onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
                   />
@@ -386,7 +393,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
                   <input
                     type="text"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                    style={{ touchAction: 'manipulation' }}
                     value={formData.last_name}
                     onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
                   />
@@ -401,7 +409,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
                 <input
                   type="email"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
@@ -415,7 +424,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
                 <input
                   type="tel"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.phone_number}
                   onChange={(e) => setFormData({ ...formData, phone_number: e.target.value })}
                 />
@@ -430,7 +440,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
                   type="text"
                   required
                   placeholder="e.g., Lisboa, Portugal"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 />
@@ -447,7 +458,8 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
                 <input
                   type="text"
                   placeholder="www.your-portfolio.com"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.url}
                   onChange={(e) => setFormData({ ...formData, url: e.target.value })}
                 />

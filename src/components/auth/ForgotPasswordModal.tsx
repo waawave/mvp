@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Mail, ArrowLeft } from 'lucide-react';
 
 interface ForgotPasswordModalProps {
@@ -12,6 +12,14 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ onClose, onBa
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,8 +62,8 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ onClose, onBa
 
   if (success) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+      <div className="fixed inset-0 h-screen w-screen bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-hidden">
+        <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4 max-h-full overflow-y-auto">
           <div className="text-center">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Mail className="w-8 h-8 text-green-600" />
@@ -112,8 +120,8 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ onClose, onBa
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+    <div className="fixed inset-0 h-screen w-screen bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-hidden">
+      <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4 max-h-full overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <button 
             onClick={onBackToLogin}
@@ -170,7 +178,8 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ onClose, onBa
                 type="email"
                 required
                 placeholder="Enter your email"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary text-base"
+                style={{ touchAction: 'manipulation' }}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />

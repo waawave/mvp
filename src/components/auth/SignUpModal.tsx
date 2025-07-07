@@ -75,7 +75,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-white z-50 overflow-hidden">
+    <div className="fixed inset-0 h-screen w-screen bg-white z-50 overflow-hidden">
       {/* Desktop Layout - Side by Side */}
       <div className="hidden md:flex h-full">
         {/* Left Half - Surf Image */}
@@ -95,7 +95,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
         </div>
 
         {/* Right Half - Signup Form */}
-        <div className="w-1/2 flex items-center justify-center p-8 overflow-hidden">
+        <div className="w-1/2 flex items-center justify-center p-8 max-h-full overflow-y-auto">
           <div className="w-full max-w-sm">
             {/* Logo as Title */}
             <div className="text-center mb-8">
@@ -112,7 +112,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
                   <input
                     type="text"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                    style={{ touchAction: 'manipulation' }}
                     value={formData.first_name}
                     onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
                   />
@@ -124,7 +125,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
                   <input
                     type="text"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                    style={{ touchAction: 'manipulation' }}
                     value={formData.last_name}
                     onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
                   />
@@ -139,7 +141,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
                 <input
                   type="email"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
@@ -153,7 +156,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
                 <input
                   type="password"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
@@ -167,7 +171,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
                 <input
                   type="password"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                 />
@@ -225,7 +230,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
       </div>
 
       {/* Mobile Layout - Vertical Scroll */}
-      <div className="md:hidden h-full overflow-y-auto">
+      <div className="md:hidden h-full max-h-full overflow-y-auto">
         {/* First Section - Image (Full Screen) */}
         <div className="h-screen relative flex items-center justify-center">
           <img
@@ -272,7 +277,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
                   <input
                     type="text"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                    style={{ touchAction: 'manipulation' }}
                     value={formData.first_name}
                     onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
                   />
@@ -284,7 +290,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
                   <input
                     type="text"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                    style={{ touchAction: 'manipulation' }}
                     value={formData.last_name}
                     onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
                   />
@@ -299,7 +306,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
                 <input
                   type="email"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
@@ -313,7 +321,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
                 <input
                   type="password"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
@@ -327,7 +336,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
                 <input
                   type="password"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-sm text-base"
+                  style={{ touchAction: 'manipulation' }}
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                 />
