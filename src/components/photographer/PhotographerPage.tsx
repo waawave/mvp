@@ -161,7 +161,7 @@ const PhotographerPage: React.FC = () => {
           
           {/* Location */}
           {photographer.location && (
-            <p className="text-gray-600">{photographer.location}</p>
+            <p className="text-gray-600">{photographer.location}, Portugal</p>
           )}
           
           {/* Website and Instagram Links */}
