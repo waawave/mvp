@@ -5,9 +5,11 @@ import { AuthResponse } from '../types';
 interface AuthContextType {
   user: AuthResponse['user'] | null;
   authToken: string | null;
+  authMessage: string | null;
   login: (data: AuthResponse, isPhotographer: boolean) => void;
   logout: () => void;
   setRedirectPath: (path: string) => void;
+  setAuthMessage: (message: string | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -23,6 +25,7 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<AuthResponse['user'] | null>(null);
   const [authToken, setAuthToken] = useState<string | null>(null);
+  const [authMessage, setAuthMessage] = useState<string | null>(null);
   const [redirectPath, setRedirectPath] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,6 +43,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          // Token is expired or invalid
+          setAuthMessage('Your session has expired, please log in again.');
+          logout();
+          return;
+        }
         throw new Error('Failed to fetch user details');
       }
 
@@ -113,9 +122,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     <AuthContext.Provider value={{ 
       user, 
       authToken, 
+      authMessage,
       login, 
       logout, 
-      setRedirectPath: setRedirectPathHandler 
+      setRedirectPath: setRedirectPathHandler,
+      setAuthMessage
     }}>
       {children}
     </AuthContext.Provider>
