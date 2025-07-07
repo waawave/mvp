@@ -99,7 +99,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
           <div className="w-full max-w-sm">
             {/* Logo as Title */}
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-900">waawave</h1>
+              <h1 className="text-3xl font-bold text-gray-900">Surfer Sign Up</h1>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -267,6 +267,10 @@ const SignUpModal: React.FC<SignUpModalProps> = ({ onClose, onSuccess }) => {
         {/* Second Section - Form (Full Screen) */}
         <div className="min-h-screen bg-white flex items-center justify-center p-6">
           <div className="w-full max-w-sm">
+            <div className="text-center mb-6">
+              <h1 className="text-2xl font-bold text-gray-900">Surfer Sign Up</h1>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* First Name and Last Name */}
               <div className="grid grid-cols-2 gap-3">
