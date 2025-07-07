@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -33,30 +33,11 @@ const Navbar: React.FC = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [scrollState, setScrollState] = useState<'top' | 'partial' | 'full'>('top');
-  const userMenuRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/' || location.pathname === '/sessions';
 
   const cartItemCount = getItemCount();
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
-        setShowUserMenu(false);
-      }
-    };
-
-    // Add event listener when dropdown is open
-    if (showUserMenu) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    // Cleanup event listener
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showUserMenu]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -383,7 +364,7 @@ const Navbar: React.FC = () => {
                     {cartItemCount > 0 ? <FullCartIcon /> : <EmptyCartIcon />}
                   </button>
                 )}
-                <div className="relative" ref={userMenuRef}>
+                <div className="relative">
                   <button 
                     onClick={() => setShowUserMenu(!showUserMenu)}
                     className="flex items-center space-x-2 bg-gray-100 rounded-full px-1 py-1 hover:bg-gray-200 transition-colors bg-opacity-50"
