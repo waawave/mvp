@@ -14,7 +14,7 @@ interface ProfileData {
 }
 
 const EditProfile: React.FC = () => {
-  const { authToken } = useAuth();
+  const { authToken, updateUser } = useAuth();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -215,6 +215,13 @@ const EditProfile: React.FC = () => {
       // Update the preview URL if we got a new one back
       if (responseData?.profile_photo?.url) {
         setPreviewUrl(responseData.profile_photo.url);
+        
+        // Update the user context with the new profile photo
+        updateUser({
+          profile_photo: {
+            url: responseData.profile_photo.url
+          }
+        });
       }
       
       // Hide success message after 3 seconds

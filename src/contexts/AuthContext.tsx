@@ -8,6 +8,7 @@ interface AuthContextType {
   authMessage: string | null;
   login: (data: AuthResponse, isPhotographer: boolean) => void;
   logout: () => void;
+  updateUser: (updatedUser: Partial<AuthResponse['user']>) => void;
   setRedirectPath: (path: string) => void;
   setAuthMessage: (message: string | null) => void;
 }
@@ -118,6 +119,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('redirectPath', path);
   };
 
+  const updateUser = (updatedUser: Partial<AuthResponse['user']>) => {
+    if (user) {
+      const newUser = { ...user, ...updatedUser };
+      setUser(newUser);
+      localStorage.setItem('user', JSON.stringify(newUser));
+    }
+  };
+
   return (
     <AuthContext.Provider value={{ 
       user, 
@@ -125,6 +134,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       authMessage,
       login, 
       logout, 
+      updateUser,
       setRedirectPath: setRedirectPathHandler,
       setAuthMessage
     }}>
