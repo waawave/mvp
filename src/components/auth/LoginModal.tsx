@@ -60,8 +60,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, onSuccess, onForgotPas
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+    <div className="fixed inset-0 h-screen w-screen bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-hidden">
+      <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4 max-h-full overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Log In</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
@@ -102,7 +102,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, onSuccess, onForgotPas
             <input
               type="email"
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary text-base"
+              style={{ touchAction: 'manipulation' }}
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             />
@@ -115,7 +116,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose, onSuccess, onForgotPas
             <input
               type="password"
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary text-base"
+              style={{ touchAction: 'manipulation' }}
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             />
