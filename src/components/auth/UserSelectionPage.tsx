@@ -27,31 +27,11 @@ const UserSelectionPage: React.FC<UserSelectionPageProps> = ({ onClose }) => {
   const [showPhotographerWaitlistModal, setShowPhotographerWaitlistModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-  // Prevent body scroll on desktop
+  // Prevent body scroll when modal is open
   useEffect(() => {
-    // Only prevent scroll on desktop (768px and up)
-    const mediaQuery = window.matchMedia('(min-width: 768px)');
-    
-    const handleResize = () => {
-      if (mediaQuery.matches) {
-        // Desktop: prevent scroll
-        document.body.style.overflow = 'hidden';
-      } else {
-        // Mobile: allow scroll
-        document.body.style.overflow = 'unset';
-      }
-    };
-
-    // Set initial state
-    handleResize();
-    
-    // Listen for resize events
-    mediaQuery.addEventListener('change', handleResize);
-
+    document.body.style.overflow = 'hidden';
     return () => {
-      // Cleanup: restore scroll
       document.body.style.overflow = 'unset';
-      mediaQuery.removeEventListener('change', handleResize);
     };
   }, []);
 
@@ -70,7 +50,7 @@ const UserSelectionPage: React.FC<UserSelectionPageProps> = ({ onClose }) => {
   return (
     <>
       {/* Desktop Layout - Fixed height, no scroll */}
-      <div className="hidden md:block fixed inset-0 bg-gray-50 z-50">
+      <div className="hidden md:block fixed inset-0 h-screen w-screen bg-gray-50 z-50 overflow-hidden">
         <div className="h-full flex flex-col">
           {/* Header with back button */}
           <div className="p-6 flex-shrink-0">
@@ -140,9 +120,9 @@ const UserSelectionPage: React.FC<UserSelectionPageProps> = ({ onClose }) => {
         </div>
       </div>
 
-      {/* Mobile Layout - Scrollable */}
-      <div className="md:hidden fixed inset-0 bg-gray-50 z-50 overflow-y-auto">
-        <div className="min-h-screen flex flex-col">
+      {/* Mobile Layout - Fixed with internal scrolling */}
+      <div className="md:hidden fixed inset-0 h-screen w-screen bg-gray-50 z-50 overflow-hidden">
+        <div className="h-full flex flex-col max-h-full overflow-y-auto">
           {/* Header with back button */}
           <div className="p-6 flex-shrink-0">
             <button
