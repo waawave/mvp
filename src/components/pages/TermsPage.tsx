@@ -48,7 +48,7 @@ const TermsPage: React.FC = () => {
             <ul className="list-disc pl-6 space-y-2 text-gray-700">
               <li>Photographers receive 80% of the sale price</li>
               <li>Waawave retains a 20% platform fee</li>
-              <li>Payments processed via [Stripe/PayPal]</li>
+              <li>Payments processed via Stripe</li>
             </ul>
           </section>
 
