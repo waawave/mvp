@@ -27,7 +27,7 @@ const PrivacyPage: React.FC = () => {
           {/* Introduction */}
           <section className="mb-12">
             <p className="text-gray-700 mb-4">
-              Waawave is committed to protecting your privacy. This Privacy Policy explains how we collect,
+              Waawaves is committed to protecting your privacy. This Privacy Policy explains how we collect,
               use, and safeguard your personal data when you use our platform, in compliance with the
               General Data Protection Regulation (GDPR) and applicable Portuguese and EU laws.
             </p>
