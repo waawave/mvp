@@ -19,6 +19,8 @@ import UploadSession from './components/upload/UploadSession';
 import StripeOnboarding from './components/stripe/StripeOnboarding';
 import StripeReturn from './components/stripe/StripeReturn';
 import HowItWorksPage from './components/pages/HowItWorksPage';
+import TermsPage from './components/pages/TermsPage';
+import PrivacyPage from './components/pages/PrivacyPage';
 import ResetPasswordPage from './components/auth/ResetPasswordPage';
 import CartPage from './components/cart/CartPage';
 import CheckoutSuccess from './components/checkout/CheckoutSuccess';
@@ -50,6 +52,8 @@ function App() {
                 <Route path="/reset-password" element={<ResetPasswordPage />} />
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/checkout/success" element={<CheckoutSuccess />} />
+                <Route path="/terms" element={<TermsPage />} />
+                <Route path="/privacy" element={<PrivacyPage />} />
                 <Route path="*" element={<div className="container mx-auto p-8 text-center">Page not found</div>} />
               </Routes>
             </main>
