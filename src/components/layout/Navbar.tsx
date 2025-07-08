@@ -306,7 +306,7 @@ const Navbar: React.FC = () => {
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                       onClick={() => setShowUserMenu(false)}
                     >
-                      {user.isPhotographer ? "Account Details" : "My Media"}
+                      {user.isPhotographer ? "My Account" : "My Account"}
                     </Link>
                     {user.isPhotographer && (
                       <Link
@@ -390,7 +390,7 @@ const Navbar: React.FC = () => {
                         className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                         onClick={() => setShowUserMenu(false)}
                       >
-                        {user.isPhotographer ? "Account Details" : "My Media"}
+                        {user.isPhotographer ? "My Account" : "My Account"}
                       </Link>
                       {user.isPhotographer && (
                         <Link
@@ -483,7 +483,7 @@ const Navbar: React.FC = () => {
                     className="block px-4 py-3 text-gray-700 hover:bg-gray-100"
                     onClick={() => setShowMobileMenu(false)}
                   >
-                    {user.isPhotographer ? "Account Details" : "My Media"}
+                    {user.isPhotographer ? "My Account" : "My Account"}
                   </Link>
                   {user.isPhotographer && (
                     <Link
