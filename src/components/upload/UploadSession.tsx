@@ -3,6 +3,7 @@ import { ArrowLeft, CheckCircle, XCircle, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import FileUpload from './FileUpload';
+import PublishingModal from './PublishingModal';
 
 type SessionType = 'freesurf' | 'surflesson';
 
@@ -32,58 +33,12 @@ interface FormData {
   videoPrice: number;
 }
 
-interface ResponseModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  success: boolean;
-  message: string;
-}
-
 interface StripeAccountStatus {
   account_id: string;
   charges_enabled: boolean;
   details_submitted: boolean;
   payouts_enabled: boolean;
 }
-
-const ResponseModal: React.FC<ResponseModalProps> = ({ isOpen, onClose, success, message }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-        <div className="flex justify-between items-start mb-6">
-          <div className="flex items-center space-x-3">
-            {success ? (
-              <CheckCircle className="text-green-500\" size={24} />
-            ) : (
-              <XCircle className="text-red-500" size={24} />
-            )}
-            <h2 className="text-xl font-bold">
-              {success ? 'Session Published!' : 'Publication Failed'}
-            </h2>
-          </div>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <X size={24} />
-          </button>
-        </div>
-
-        <div className="space-y-4">
-          <p className="text-gray-700">{message}</p>
-        </div>
-
-        <div className="mt-6 flex justify-end">
-          <button
-            onClick={onClose}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const UploadSession: React.FC = () => {
   const { authToken, user } = useAuth();
@@ -103,14 +58,16 @@ const UploadSession: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [stripeAccountStatus, setStripeAccountStatus] = useState<StripeAccountStatus | null>(null);
   const [checkingStripeStatus, setCheckingStripeStatus] = useState(true);
-  const [responseModal, setResponseModal] = useState<{
+  const [publishingModal, setPublishingModal] = useState<{
     isOpen: boolean;
-    success: boolean;
+    isSuccess: boolean | null; // null = loading, true = success, false = error
     message: string;
+    sessionId?: number;
   }>({
     isOpen: false,
-    success: false,
-    message: ''
+    isSuccess: null,
+    message: '',
+    sessionId: undefined
   });
 
   // Check Stripe account status on component mount
@@ -325,13 +282,20 @@ const UploadSession: React.FC = () => {
     
     const validationErrors = getValidationErrors();
     if (validationErrors.length > 0) {
-      setResponseModal({
+      setPublishingModal({
         isOpen: true,
-        success: false,
+        isSuccess: false,
         message: 'Please fix the following issues before publishing: ' + validationErrors.join(', ')
       });
       return;
     }
+
+    // Show publishing modal immediately
+    setPublishingModal({
+      isOpen: true,
+      isSuccess: null, // Loading state
+      message: "Hang tight! We're publishing your session."
+    });
 
     try {
       setIsSubmitting(true);
@@ -471,12 +435,18 @@ const UploadSession: React.FC = () => {
         throw new Error(responseData.message || 'Failed to publish session');
       }
 
-      // Success
-      setResponseModal({
+      // Success - update modal to success state
+      setPublishingModal({
         isOpen: true,
-        success: true,
-        message: 'Your session has been successfully published! Surfers can now discover and purchase your photos and videos.'
+        isSuccess: true,
+        message: 'Your session has been successfully published! Surfers can now discover and purchase your photos and videos.',
+        sessionId: responseData.id
       });
+      
+      // Redirect to the new session page after 4 seconds
+      setTimeout(() => {
+        navigate(`/session/${responseData.id}`);
+      }, 4000);
       
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An error occurred while publishing the session';
@@ -484,9 +454,10 @@ const UploadSession: React.FC = () => {
       console.error('Error:', err);
       console.error('=== END UPLOAD ERROR ===');
       
-      setResponseModal({
+      // Error - update modal to error state
+      setPublishingModal({
         isOpen: true,
-        success: false,
+        isSuccess: false,
         message: errorMessage
       });
     } finally {
@@ -498,10 +469,15 @@ const UploadSession: React.FC = () => {
     setUploadedFiles(files);
   };
 
-  const handleModalClose = () => {
-    setResponseModal({ isOpen: false, success: false, message: '' });
-    if (responseModal.success) {
-      navigate('/sessions');
+  const handlePublishingModalClose = () => {
+    // Only allow closing on error state
+    if (publishingModal.isSuccess === false) {
+      setPublishingModal({ 
+        isOpen: false, 
+        isSuccess: null, 
+        message: '',
+        sessionId: undefined 
+      });
     }
   };
 
@@ -789,12 +765,12 @@ const UploadSession: React.FC = () => {
         </form>
       </div>
 
-      {/* Response Modal */}
-      <ResponseModal
-        isOpen={responseModal.isOpen}
-        onClose={handleModalClose}
-        success={responseModal.success}
-        message={responseModal.message}
+      {/* Publishing Modal */}
+      <PublishingModal
+        isOpen={publishingModal.isOpen}
+        message={publishingModal.message}
+        isSuccess={publishingModal.isSuccess}
+        onClose={publishingModal.isSuccess === false ? handlePublishingModalClose : undefined}
       />
     </div>
   );
