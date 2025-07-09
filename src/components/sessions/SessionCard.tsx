@@ -47,7 +47,7 @@ const SessionCard: React.FC<SessionCardProps> = ({
           )}
           
           {/* Images grid */}
-          <div className="aspect-[4/3] grid grid-cols-2 grid-rows-2 gap-1">
+          <div className="aspect-[4/3] grid grid-cols-2 grid-rows-2 gap-0">
             {cover_images && cover_images.length > 0 ? (
               cover_images.map((image, index) => (
                 <img 
