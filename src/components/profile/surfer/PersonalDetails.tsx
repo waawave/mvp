@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
+import { User } from '../../../types';
 
 const PersonalDetails: React.FC = () => {
-  const { authToken } = useAuth();
+  const { authToken, updateUser } = useAuth();
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: ''
@@ -59,6 +60,12 @@ const PersonalDetails: React.FC = () => {
       if (!response.ok) {
         throw new Error('Failed to update personal details');
       }
+
+      // Update the user context with the new name
+      updateUser({
+        first_name: formData.first_name,
+        last_name: formData.last_name
+      });
 
       setSuccess(true);
       
