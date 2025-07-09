@@ -47,22 +47,19 @@ const SessionCard: React.FC<SessionCardProps> = ({
           )}
           
           {/* Images grid */}
-          <div className="aspect-[4/3] grid grid-cols-2 grid-rows-2 overflow-hidden">
+          <div className="aspect-[4/3] grid grid-cols-2 grid-rows-2 gap-[0.5px]">
             {cover_images && cover_images.length > 0 ? (
-              cover_images.map((image, index) => {
-                return (
-                  <img 
-                    key={index}
-                    src={image.url}
-                    alt={`Surf session ${index + 1}`}
-                    className="w-full h-full object-cover block"
-                    style={{ margin: 0, padding: 0, display: 'block' }}
-                  />
-                );
-              })
+              cover_images.map((image, index) => (
+                <img 
+                  key={index}
+                  src={image.url}
+                  alt={`Surf session ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              ))
             ) : (
               Array(4).fill(0).map((_, index) => (
-                <div key={index} className="bg-gray-200 w-full h-full flex items-center justify-center" style={{ margin: 0, padding: 0 }}>
+                <div key={index} className="bg-gray-200 w-full h-full flex items-center justify-center">
                   <span className="text-gray-400">No image</span>
                 </div>
               ))
