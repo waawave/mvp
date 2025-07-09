@@ -69,32 +69,38 @@ const SessionPage: React.FC = () => {
     const shareData = {
       title: `${locationName} - Surf Session`,
       text: `Check out this amazing surf session at ${locationName} on ${formatDate(session.session_date)}! ${session.image_count} photos and ${session.video_count} videos captured by ${session.photographer.first_name} ${session.photographer.last_name}.`,
-      url: window.location.href 
+      url: window.location.href
     };
 
     try {
       // On desktop, directly copy to clipboard
       if (!isMobile) {
-        await navigator.clipboard.writeText(window.location.href);
+        const pureUrl = window.location.href;
+        await navigator.clipboard.writeText(pureUrl);
         setShareSuccess(true);
         setTimeout(() => setShareSuccess(false), 2000);
         return;
       }
       
       // On mobile, try Web Share API
-      if (isMobile && navigator.share && navigator.canShare && navigator.canShare(shareData)) {
-        await navigator.share(shareData);
+      if (isMobile && navigator.share) {
+        // Use only the pure URL for sharing
+        const pureUrl = window.location.href;
+        await navigator.share({
+          url: pureUrl
+        });
         return;
       }
       
       // Fallback to clipboard
-      await navigator.clipboard.writeText(window.location.href);
+      const pureUrl = window.location.href;
+      await navigator.clipboard.writeText(pureUrl);
       setShareSuccess(true);
       setTimeout(() => setShareSuccess(false), 2000);
     } catch (err) {
       // Final fallback - create a temporary input element
       const textArea = document.createElement('textarea');
-      textArea.value = window.location.href;
+      textArea.value = window.location.href; // Pure URL
       document.body.appendChild(textArea);
       textArea.select();
       document.execCommand('copy');
