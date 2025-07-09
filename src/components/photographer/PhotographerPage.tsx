@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Share2, Check, Globe, Instagram } from 'lucide-react';
 import { Photographer } from '../../types';
 import SessionCard from '../sessions/SessionCard';
-import { formatDate, formatTime } from '../../utils/dateUtils';
+import { formatDate, formatTime } from '../../utils/dateUtils'; 
 
 const PhotographerPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -11,6 +11,19 @@ const PhotographerPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [shareSuccess, setShareSuccess] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const fetchPhotographer = async () => {
@@ -42,12 +55,20 @@ const PhotographerPage: React.FC = () => {
     const shareData = {
       title: `${photographer.first_name} ${photographer.last_name} - Surf Photographer`,
       text: `Check out ${photographer.first_name} ${photographer.last_name}'s surf photography on Waawave! ${photographer.sessions?.length || 0} amazing sessions captured.`,
-      url: window.location.href
+      url: window.location.href 
     };
 
     try {
-      // Try Web Share API first (mobile devices)
-      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+      // On desktop, directly copy to clipboard
+      if (!isMobile) {
+        await navigator.clipboard.writeText(window.location.href);
+        setShareSuccess(true);
+        setTimeout(() => setShareSuccess(false), 2000);
+        return;
+      }
+      
+      // On mobile, try Web Share API
+      if (isMobile && navigator.share && navigator.canShare && navigator.canShare(shareData)) {
         await navigator.share(shareData);
         return;
       }
@@ -129,7 +150,7 @@ const PhotographerPage: React.FC = () => {
               {shareSuccess ? (
                 <>
                   <Check size={20} className="text-green-600" />
-                  <span className="text-green-600 text-sm">Shared</span>
+                  <span className="text-green-600 text-sm">Link copied!</span>
                 </>
               ) : (
                 <>

@@ -69,12 +69,20 @@ const SessionPage: React.FC = () => {
     const shareData = {
       title: `${locationName} - Surf Session`,
       text: `Check out this amazing surf session at ${locationName} on ${formatDate(session.session_date)}! ${session.image_count} photos and ${session.video_count} videos captured by ${session.photographer.first_name} ${session.photographer.last_name}.`,
-      url: window.location.href
+      url: window.location.href 
     };
 
     try {
-      // Try Web Share API first (mobile devices)
-      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+      // On desktop, directly copy to clipboard
+      if (!isMobile) {
+        await navigator.clipboard.writeText(window.location.href);
+        setShareSuccess(true);
+        setTimeout(() => setShareSuccess(false), 2000);
+        return;
+      }
+      
+      // On mobile, try Web Share API
+      if (isMobile && navigator.share && navigator.canShare && navigator.canShare(shareData)) {
         await navigator.share(shareData);
         return;
       }
@@ -259,7 +267,7 @@ const SessionPage: React.FC = () => {
               {shareSuccess ? (
                 <>
                   <Check size={20} className="text-green-600" />
-                  <span className="text-green-600 text-sm">Shared</span>
+                  <span className="text-green-600 text-sm">Link copied!</span>
                 </>
               ) : (
                 <>
