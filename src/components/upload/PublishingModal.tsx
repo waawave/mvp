@@ -98,7 +98,7 @@ const PublishingModal: React.FC<PublishingModalProps> = ({
         </div>
 
         {/* Additional loading indicators for the publishing state */}
-        {isSuccess === null && (
+        {/*{isSuccess === null && (
           <div className="mt-16 space-y-4">
             <div className="flex items-center justify-center space-x-2 text-gray-500">
               <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
@@ -109,7 +109,7 @@ const PublishingModal: React.FC<PublishingModalProps> = ({
               Processing your photos and videos...
             </p>
           </div>
-        )}
+        )}*/}
 
         {/* Success state additional info */}
         {isSuccess === true && (
