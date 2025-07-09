@@ -440,12 +440,12 @@ const UploadSession: React.FC = () => {
         isOpen: true,
         isSuccess: true,
         message: 'Your session has been successfully published! Surfers can now discover and purchase your photos and videos.',
-        sessionId: responseData.id
+        sessionId: responseData.session.id
       });
       
       // Redirect to the new session page after 4 seconds
       setTimeout(() => {
-        navigate(`/session/${responseData.id}`);
+        navigate(`/session/${responseData.session.id}`);
       }, 4000);
       
     } catch (err) {
