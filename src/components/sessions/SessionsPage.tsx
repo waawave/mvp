@@ -215,14 +215,14 @@ const SessionsPage: React.FC = () => {
         </section>
         
         {/* Sticky Date Header */}
-        {stickyHeaderVisible && (
+       {/*{stickyHeaderVisible && (
           <div 
             ref={stickyHeaderRef}
-            className="sticky top-16 z-30 bg-white shadow-sm py-3 px-4 text-center border-b border-gray-200"
+            className="sticky top-16 z-30 bg-transparent py-3 px-4 text-center flex justify-center"
           >
-            <h2 className="text-lg font-medium text-gray-900">{currentDateLabel}</h2>
+            <h2 className="text-lg font-medium text-gray-900 bg-white w-[100px] py-2 rounded-lg border border-gray-200 shadow-sm">{currentDateLabel}</h2>
           </div>
-        )}
+        )} */}
         
         {/* Sessions Grid */}
         <section className="px-4">
@@ -268,9 +268,9 @@ const SessionsPage: React.FC = () => {
                     {/* Date Header */}
                     <div 
                       ref={el => dateHeadersRef.current[group.dateString] = el}
-                      className="text-center py-3"
-                    >
-                      <h2 className="text-lg font-medium text-gray-900">{group.dateLabel}</h2>
+                      className="text-center py-3 flex justify-center"
+                    > 
+                      <h2 className="sticky top-16 z-30 text-base font-medium text-gray-900 bg-white w-[100px] py-2 rounded-lg border border-gray-200 shadow-sm">{group.dateLabel}</h2> 
                     </div>
                     
                     {/* Sessions for this date */}
