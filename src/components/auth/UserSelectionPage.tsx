@@ -68,14 +68,13 @@ const UserSelectionPage: React.FC<UserSelectionPageProps> = ({ onClose }) => {
             <div className="mb-8">
               <WaawaveLogo className="h-8 text-gray-900" />
             </div>
-
             {/* Title */}
-            <h1 className="text-2xl font-semibold text-gray-900 mb-10 text-center">
+            <h1 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
               Tell us who you are to get started
             </h1>
 
             {/* User type cards */}
-            <div className="w-full max-w-md space-y-6">
+            <div className="w-full max-w-md space-y-4">
               {/* Surfer Card */}
               <button
                 onClick={handleSurferClick}
@@ -107,7 +106,7 @@ const UserSelectionPage: React.FC<UserSelectionPageProps> = ({ onClose }) => {
             </div>
 
             {/* Sign in link */}
-            <div className="mt-12 text-center">
+            <div className="mt-8 text-center">
               <span className="text-gray-600">Already have an account? </span>
               <button
                 onClick={handleSignInClick}
@@ -141,12 +140,12 @@ const UserSelectionPage: React.FC<UserSelectionPageProps> = ({ onClose }) => {
             </div>
 
             {/* Title */}
-            <h1 className="text-2xl font-semibold text-gray-900 mb-16 text-center">
+            <h1 className="text-2xl font-semibold text-gray-900 mb-8 text-center">
               Tell us who you are to get started
             </h1>
 
             {/* User type cards */}
-            <div className="w-full max-w-md space-y-6">
+            <div className="w-full max-w-md space-y-4">
               {/* Surfer Card */}
               <button
                 onClick={handleSurferClick}
@@ -178,7 +177,7 @@ const UserSelectionPage: React.FC<UserSelectionPageProps> = ({ onClose }) => {
             </div>
 
             {/* Sign in link */}
-            <div className="mt-12 text-center">
+            <div className="mt-6 text-center">
               <span className="text-gray-600">Already have an account? </span>
               <button
                 onClick={handleSignInClick}
