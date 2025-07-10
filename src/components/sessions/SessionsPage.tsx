@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import SessionFilters from './SessionFilters';
 import SessionCard from './SessionCard';
 import useSessions from '../../hooks/useSessions';
@@ -16,19 +16,130 @@ const WaawaveLogo: React.FC<{ className?: string }> = ({ className = "" }) => (
   </svg>
 );
 
+// Group sessions by date
+interface SessionGroup {
+  dateLabel: string;
+  dateString: string; // For sorting and comparison
+  sessions: any[];
+}
+
 const SessionsPage: React.FC = () => {
   const { 
     sessions, 
     loading, 
-    error, 
+    error,
+    noSessionsForFilter,
     hasMore, 
     setLocationFilter, 
     setTagFilter, 
-    setDateFilter,
     loadMore,
     formatDate,
     formatTime
   } = useSessions();
+
+  const [sessionGroups, setSessionGroups] = useState<SessionGroup[]>([]);
+  const [stickyHeaderVisible, setStickyHeaderVisible] = useState(false);
+  const [currentDateLabel, setCurrentDateLabel] = useState<string>('');
+  const dateHeadersRef = useRef<{[key: string]: HTMLDivElement | null}>({});
+  const stickyHeaderRef = useRef<HTMLDivElement>(null);
+  const filtersRef = useRef<HTMLDivElement>(null);
+
+  // Group sessions by date whenever sessions change
+  useEffect(() => {
+    if (sessions.length === 0) return;
+
+    const groups: { [key: string]: SessionGroup } = {};
+    
+    sessions.forEach(session => {
+      const sessionDate = new Date(session.session_date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+      
+      let dateLabel: string;
+      if (sessionDate.toDateString() === today.toDateString()) {
+        dateLabel = 'Today';
+      } else if (sessionDate.toDateString() === yesterday.toDateString()) {
+        dateLabel = 'Yesterday';
+      } else {
+        // Format: "22 November"
+        dateLabel = sessionDate.toLocaleDateString('en-US', { 
+          day: 'numeric', 
+          month: 'long'
+        });
+      }
+      
+      // Use ISO string for consistent sorting
+      const dateString = sessionDate.toISOString().split('T')[0];
+      
+      if (!groups[dateString]) {
+        groups[dateString] = {
+          dateLabel,
+          dateString,
+          sessions: []
+        };
+      }
+      
+      groups[dateString].sessions.push(session);
+    });
+    
+    // Convert to array and sort by date (most recent first)
+    const sortedGroups = Object.values(groups).sort((a, b) => {
+      return b.dateString.localeCompare(a.dateString);
+    });
+    
+    // Within each group, sort sessions by start_hour (latest first)
+    sortedGroups.forEach(group => {
+      group.sessions.sort((a, b) => b.start_hour - a.start_hour);
+    });
+    
+    setSessionGroups(sortedGroups);
+    
+    // Set initial current date label
+    if (sortedGroups.length > 0) {
+      setCurrentDateLabel(sortedGroups[0].dateLabel);
+    }
+  }, [sessions]);
+
+  // Handle scroll to update sticky header
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!filtersRef.current || sessionGroups.length === 0) return;
+      
+      const filtersBottom = filtersRef.current.getBoundingClientRect().bottom;
+      const scrollY = window.scrollY;
+      
+      // Show sticky header when scrolled past filters section
+      setStickyHeaderVisible(filtersBottom < 0);
+      
+      // Determine which date header is currently visible
+      let currentGroup = sessionGroups[0];
+      let smallestDistance = Infinity;
+      
+      Object.entries(dateHeadersRef.current).forEach(([dateString, headerEl]) => {
+        if (!headerEl) return;
+        
+        const rect = headerEl.getBoundingClientRect();
+        const distance = Math.abs(rect.top);
+        
+        // Find the header closest to the top of the viewport
+        if (distance < smallestDistance) {
+          smallestDistance = distance;
+          const group = sessionGroups.find(g => g.dateString === dateString);
+          if (group) {
+            currentGroup = group;
+          }
+        }
+      });
+      
+      setCurrentDateLabel(currentGroup.dateLabel);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [sessionGroups]);
 
   return (
     <>
@@ -93,15 +204,25 @@ const SessionsPage: React.FC = () => {
       {/* Main Content */}
       <div id="filters-section" className="min-h-screen bg-gray-50 pb-16">
         {/* Filters Section - Added top padding to accommodate navbar */}
-        <section className="pt-24 pb-12 px-4">
+        <section ref={filtersRef} className="pt-24 pb-12 px-4">
           <div className="container mx-auto">
             <SessionFilters 
               onLocationFilter={setLocationFilter}
               onTagFilter={setTagFilter}
-              onDateFilter={setDateFilter}
+              onDateFilter={() => {}} // Removed date filter functionality
             />
           </div>
         </section>
+        
+        {/* Sticky Date Header */}
+        {stickyHeaderVisible && (
+          <div 
+            ref={stickyHeaderRef}
+            className="sticky top-16 z-30 bg-white shadow-sm py-3 px-4 text-center border-b border-gray-200"
+          >
+            <h2 className="text-lg font-medium text-gray-900">{currentDateLabel}</h2>
+          </div>
+        )}
         
         {/* Sessions Grid */}
         <section className="px-4">
@@ -125,27 +246,46 @@ const SessionsPage: React.FC = () => {
               </div>
             )}
             
-            {!loading && !error && sessions.length === 0 && (
+            {!loading && !error && (sessionGroups.length === 0 || noSessionsForFilter) && (
               <div className="text-center py-12">
                 <div className="bg-blue-50 text-blue-600 p-8 rounded-md inline-block max-w-lg">
-                  <h3 className="text-xl font-semibold mb-2">No sessions found</h3>
-                  <p>Try changing your filters or check back later for new sessions.</p>
+                  <h3 className="text-xl font-semibold mb-2">
+                    {noSessionsForFilter ? "No sessions available for this selection" : "No sessions found"}
+                  </h3>
+                  <p>
+                    {noSessionsForFilter 
+                      ? "This surf school or location doesn't have any sessions yet. Please check back later or try a different selection."
+                      : "Try changing your filters or check back later for new sessions."}
+                  </p>
                 </div>
               </div>
             )}
             
-            {!loading && !error && sessions.length > 0 && (
-              <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {sessions.map((session) => (
-                    <SessionCard 
-                      key={session.id}
-                      session={session}
-                      formatDate={formatDate}
-                      formatTime={formatTime}
-                    />
-                  ))}
-                </div>
+            {!loading && !error && sessionGroups.length > 0 && !noSessionsForFilter && (
+              <div className="space-y-12">
+                {sessionGroups.map((group) => (
+                  <div key={group.dateString} className="space-y-6">
+                    {/* Date Header */}
+                    <div 
+                      ref={el => dateHeadersRef.current[group.dateString] = el}
+                      className="text-center py-3"
+                    >
+                      <h2 className="text-lg font-medium text-gray-900">{group.dateLabel}</h2>
+                    </div>
+                    
+                    {/* Sessions for this date */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {group.sessions.map((session) => (
+                        <SessionCard 
+                          key={session.id}
+                          session={session}
+                          formatDate={formatDate}
+                          formatTime={formatTime}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))}
                 
                 {hasMore && (
                   <div className="mt-12 text-center">
@@ -157,7 +297,7 @@ const SessionsPage: React.FC = () => {
                     </button>
                   </div>
                 )}
-              </>
+              </div>
             )}
           </div>
         </section>

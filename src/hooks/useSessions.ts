@@ -11,6 +11,7 @@ export const useSessions = () => {
   const [locationFilter, setLocationFilter] = useState<number | null>(null);
   const [tagFilter, setTagFilter] = useState<string | null>(null);
   const [dateFilter, setDateFilter] = useState<string | null>(null);
+  const [noSessionsForFilter, setNoSessionsForFilter] = useState(false);
   const [visibleCount, setVisibleCount] = useState(6);
 
   useEffect(() => {
@@ -91,6 +92,14 @@ export const useSessions = () => {
     });
     
     setFilteredSessions(result);
+    
+    // Check if we have no sessions for a specific filter
+    if (locationFilter !== null && result.length === 0) {
+      setNoSessionsForFilter(true);
+    } else {
+      setNoSessionsForFilter(false);
+    }
+    
   }, [sessions, locationFilter, tagFilter, dateFilter]);
 
   const formatDate = (dateString: string) => {
@@ -127,6 +136,7 @@ export const useSessions = () => {
     loading,
     error,
     hasMore: visibleCount < filteredSessions.length,
+    noSessionsForFilter,
     setLocationFilter,
     setTagFilter,
     setDateFilter,
