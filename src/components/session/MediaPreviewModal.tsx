@@ -364,7 +364,7 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
             <div className="bg-white p-6 space-y-6">
               {/* Price and Add to Cart */}
               <div className="space-y-4">
-                <div className="text-center">
+                <div className="flex justify-between items-center">
                   <div className="text-3xl font-bold text-gray-900">
                     {media.type === 'video' ? session.video_price : session.photo_price}€
                   </div>
