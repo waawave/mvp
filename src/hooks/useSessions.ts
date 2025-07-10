@@ -10,6 +10,7 @@ export const useSessions = () => {
   const [error, setError] = useState<string | null>(null);
   const [locationFilter, setLocationFilter] = useState<number | null>(null);
   const [tagFilter, setTagFilter] = useState<string | null>(null);
+  const [dateFilter, setDateFilter] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(6);
 
   useEffect(() => {
@@ -65,15 +66,32 @@ export const useSessions = () => {
       }
     }
     
+    // Apply date filter if set
+    if (dateFilter !== null) {
+      // Convert both to YYYY-MM-DD format for comparison
+      const filterDate = dateFilter.split('T')[0];
+      result = result.filter(session => {
+        const sessionDate = new Date(session.session_date).toISOString().split('T')[0];
+        return sessionDate === filterDate;
+      });
+    }
+    
     // Maintain the date sorting after filtering
     result.sort((a, b) => {
       const dateA = new Date(a.session_date).getTime();
       const dateB = new Date(b.session_date).getTime();
-      return dateB - dateA; // Most recent first (descending order)
+      
+      // First sort by date (most recent first)
+      if (dateA !== dateB) {
+        return dateB - dateA;
+      }
+      
+      // If same date, sort by start_hour (latest first)
+      return b.start_hour - a.start_hour;
     });
     
     setFilteredSessions(result);
-  }, [sessions, locationFilter, tagFilter]);
+  }, [sessions, locationFilter, tagFilter, dateFilter]);
 
   const formatDate = (dateString: string) => {
     const sessionDate = new Date(dateString);
@@ -111,6 +129,7 @@ export const useSessions = () => {
     hasMore: visibleCount < filteredSessions.length,
     setLocationFilter,
     setTagFilter,
+    setDateFilter,
     loadMore,
     formatDate,
     formatTime,

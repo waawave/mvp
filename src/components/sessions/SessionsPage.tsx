@@ -24,6 +24,7 @@ const SessionsPage: React.FC = () => {
     hasMore, 
     setLocationFilter, 
     setTagFilter, 
+    setDateFilter,
     loadMore,
     formatDate,
     formatTime
@@ -97,6 +98,7 @@ const SessionsPage: React.FC = () => {
             <SessionFilters 
               onLocationFilter={setLocationFilter}
               onTagFilter={setTagFilter}
+              onDateFilter={setDateFilter}
             />
           </div>
         </section>
