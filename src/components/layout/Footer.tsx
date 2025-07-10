@@ -92,7 +92,7 @@ const Footer: React.FC = () => {
                     onClick={handlePublishSessionClick}
                     className="text-gray-500 hover:text-blue-600 transition-colors"
                   >
-                    Publish a session
+                    Publish a Session
                   </Link>
                 </li>
                 <li>
