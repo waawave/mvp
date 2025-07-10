@@ -647,6 +647,7 @@ const UploadSession: React.FC = () => {
                   type="date"
                   value={formData.date}
                   onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                  max={new Date().toISOString().split('T')[0]}
                   className="w-full px-3 py-2 h-10 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-base"
                   style={{ touchAction: 'manipulation' }}
                 />
