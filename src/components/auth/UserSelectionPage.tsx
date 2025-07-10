@@ -135,7 +135,7 @@ const UserSelectionPage: React.FC<UserSelectionPageProps> = ({ onClose }) => {
           {/* Main content */}
           <div className="flex-1 flex flex-col items-center justify-center px-6 pb-16">
             {/* Logo */}
-            <div className="mb-12">
+            <div className="mb-8">
               <WaawaveLogo className="h-8 text-gray-900" />
             </div>
 
