@@ -371,7 +371,7 @@ const PhotographerWaitlistModal: React.FC<PhotographerWaitlistModalProps> = ({ o
         </div>
 
         {/* Second Section - Form */}
-        <div className="bg-white flex items-center justify-center p-6">
+        <div className="bg-white flex items-center justify-center p-6 mb-16">
           <div className="w-full max-w-sm">
             <div className="text-center mb-6">
               <h1 className="text-2xl font-bold text-gray-900">Join our Waitlist</h1>
