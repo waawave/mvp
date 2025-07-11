@@ -170,7 +170,7 @@ const SessionFilters: React.FC<SessionFiltersProps> = ({ onLocationFilter, onTag
           <div className="relative">
             
             {isDropdownOpen && !loading && (
-              <div className="absolute z-50 mt-1 w-full md:w-1/2 md:right-0 bg-white rounded-md shadow-lg max-h-80 overflow-auto border border-gray-200">
+              <div className="absolute z-50 mt-1 w-full md:w-3/5 md:right-0 bg-white rounded-md shadow-lg max-h-80 overflow-auto border border-gray-200">
                 <div className="py-1">
                   {/* Clear selection option */}
                   {selectedOption && (
