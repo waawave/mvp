@@ -122,50 +122,55 @@ const SessionFilters: React.FC<SessionFiltersProps> = ({ onLocationFilter, onTag
       <h1 className="text-4xl font-bold text-center text-gray-900">Find your waves</h1>
       
       {/* Filter container */}
-      <div className="max-w-xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-sm p-4 border border-gray-100">
+      <div className="max-w-[50rem] mx-auto">
+        <div className="bg-white rounded-[1.8rem] shadow-md p-10 border border-gray-100">
           {/* Switch button */}
-          <div className="flex bg-gray-100 rounded-lg p-1">
-            <button
-              onClick={() => handleSwitchFilter('surflesson')}
-              className={`flex-1 py-3 px-4 rounded-lg font-medium transition-colors ${
-                activeFilter === 'surflesson' 
-                  ? 'bg-black text-white' 
-                  : 'text-gray-700'
-              }`}
-            >
-              Surf Lesson
-            </button>
-            <button
-              onClick={() => handleSwitchFilter('freesurf')}
-              className={`flex-1 py-3 px-4 rounded-lg font-medium transition-colors ${
-                activeFilter === 'freesurf' 
-                  ? 'bg-black text-white' 
-                  : 'text-gray-700'
-              }`}
-            >
-              Free Surf
-            </button>
-          </div>
+          <div className="flex flex-col md:flex-row md:items-center md:space-x-4">
+            <div className="flex bg-gray-100 rounded-lg p-1 md:w-2/5">
+              <button
+                onClick={() => handleSwitchFilter('surflesson')}
+                className={`flex-1 py-4 px-4 rounded-lg font-medium transition-colors ${
+                  activeFilter === 'surflesson' 
+                    ? 'bg-black text-white' 
+                    : 'text-gray-700'
+                }`}
+              >
+                Surf Lesson
+              </button>
+              <button
+                onClick={() => handleSwitchFilter('freesurf')}
+                className={`flex-1 py-4 px-4 rounded-lg font-medium transition-colors ${
+                  activeFilter === 'freesurf' 
+                    ? 'bg-black text-white' 
+                    : 'text-gray-700'
+                }`}
+              >
+                Free Surf
+              </button>
+            </div>
 
-          {/* Location/Surf School selector */}
-          <div className="relative mt-4">
-            <button
-              className="w-full bg-white border border-gray-300 text-left px-4 py-3 rounded-md flex items-center justify-between"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              disabled={loading}
-            >
-              <span className="text-gray-700">
-                {getPlaceholderText()}
-              </span>
-              <ChevronDown
-                size={20}
-                className={`text-gray-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
-              />
-            </button>
+            {/* Location/Surf School selector */}
+            <div className="relative mt-6 md:mt-0 md:w-3/5">
+              <button
+                className="w-full bg-white border border-black text-left px-4 py-4 rounded-md flex items-center justify-between"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                disabled={loading}
+              >
+                <span className="text-gray-700">
+                  {getPlaceholderText()}
+                </span>
+                <ChevronDown
+                  size={20}
+                  className={`text-black transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+                />
+              </button>
+            </div>
+          </div>
+          
+          <div className="relative">
             
             {isDropdownOpen && !loading && (
-              <div className="absolute z-50 mt-1 w-full bg-white rounded-md shadow-lg max-h-80 overflow-auto border border-gray-200">
+              <div className="absolute z-50 mt-1 w-full md:w-1/2 md:right-0 bg-white rounded-md shadow-lg max-h-80 overflow-auto border border-gray-200">
                 <div className="py-1">
                   {/* Clear selection option */}
                   {selectedOption && (
@@ -236,7 +241,7 @@ const SessionFilters: React.FC<SessionFiltersProps> = ({ onLocationFilter, onTag
             
             {/* Error message */}
             {error && (
-              <div className="mt-2 text-sm text-red-600 text-center">
+              <div className="mt-2 text-sm text-red-600 text-center md:w-1/2 md:ml-auto">
                 {error}
               </div>
             )}

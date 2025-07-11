@@ -204,7 +204,7 @@ const SessionsPage: React.FC = () => {
       {/* Main Content */}
       <div id="filters-section" className="min-h-screen bg-gray-50 pb-16">
         {/* Filters Section - Added top padding to accommodate navbar */}
-        <section ref={filtersRef} className="pt-24 pb-12 px-4">
+        <section ref={filtersRef} className="pt-[4rem] pb-12 px-4">
           <div className="container mx-auto">
             <SessionFilters 
               onLocationFilter={setLocationFilter}
@@ -270,7 +270,7 @@ const SessionsPage: React.FC = () => {
                       ref={el => dateHeadersRef.current[group.dateString] = el}
                       className="text-center py-3 flex justify-center"
                     > 
-                      <h2 className="sticky top-16 z-30 text-base font-medium text-gray-900 bg-white w-[100px] py-2 rounded-lg border border-gray-200 shadow-sm">{group.dateLabel}</h2> 
+                      <h2 className="sticky top-16 z-30 text-base font-medium text-gray-900 bg-white w-[100px] py-2 rounded-lg border border-gray-200 shadow-md">{group.dateLabel}</h2> 
                     </div>
                     
                     {/* Sessions for this date */}
