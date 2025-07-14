@@ -344,21 +344,22 @@ const MyMedia: React.FC = () => {
                   
                   {/* Download button - Always visible on mobile, hover on desktop */}
                   <button 
-                    onClick={() => handleDownload(item)}
-                    disabled={isDownloading}
-                    className={`absolute bottom-3 right-3 p-2 rounded-full shadow-lg transition-all duration-200 md:opacity-0 md:group-hover:opacity-100 ${
-                      isDownloading 
-                        ? 'bg-gray-400 cursor-not-allowed' 
-                        : 'bg-white/90 hover:bg-white'
-                    }`}
-                    title={isDownloading ? 'Loading...' : isMobile && item.media.type === 'video' ? 'Play video' : isMobile ? 'Open media' : 'Download high-resolution file'}
-                  >
-                    {isDownloading ? (
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-600"></div>
-                    ) : (
-                      <ArrowDown size={20} className="text-gray-700" />
-                    )}
-                  </button>
+  onClick={() => handleDownload(item)}
+  disabled={isDownloading}
+  className={`absolute bottom-3 right-3 p-2 px-6 rounded-full shadow-lg transition-all duration-200 md:opacity-0 md:group-hover:opacity-100 ${
+    isDownloading 
+      ? 'bg-gray-400 cursor-not-allowed' 
+      : 'bg-white/90 hover:bg-white'
+  }`}
+  title={isDownloading ? 'Loading...' : isMobile && item.media.type === 'video' ? 'Play video' : isMobile ? 'Open media' : 'Download high-resolution file'}
+>
+  {isDownloading ? (
+    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-600"></div>
+  ) : (
+    <span className="text-gray-700 text-sm font-medium">Download Original Media</span>
+  
+  )}
+</button>
                 </div>
                 <div className="p-4 space-y-3">
                   <div className="flex items-center space-x-2">
