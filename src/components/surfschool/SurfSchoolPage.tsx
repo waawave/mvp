@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Share2, Globe, Phone, Instagram, Check } from 'lucide-react';
+import { ArrowLeft, Share2, Globe, Phone, Instagram, Check, MapPin } from 'lucide-react';
 import { SurfSchoolResponse } from '../../types';
 import SessionCard from '../sessions/SessionCard';
 import { formatDate, formatTime } from '../../utils/dateUtils'; 
@@ -227,17 +227,15 @@ const SurfSchoolPage: React.FC = () => {
               </a>
             )}
             {surfschool.phone_number && (
-              <button
-                onClick={() => handlePhoneClick(surfschool.phone_number!)}
-                className="text-gray-600 hover:text-primary-dark transition-colors relative"
-                title={phoneSuccess ? 'Phone number copied!' : 'Copy phone number'}
+               <a 
+                href={surfschool.phone_number.startsWith('http') ? surfschool.phone_number : `https://${surfschool.phone_number}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-primary-dark transition-colors"
+                title="Visit website"
               >
-                {phoneSuccess ? (
-                  <Check size={20} className="text-green-600" />
-                ) : (
-                  <Phone size={20} />
-                )}
-              </button>
+                <MapPin size={20} />
+              </a>
             )}
             {surfschool.instagram && (
               <a 
