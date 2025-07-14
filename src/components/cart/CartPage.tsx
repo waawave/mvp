@@ -12,14 +12,6 @@ import { Photographer } from '../../types';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-const getDiscountedPrice = (items: any[], getTotalPrice: () => number) => {
-  const total = getTotalPrice();
-  if (items.length >= 3) {
-    return total * 0.7; // 30% off
-  }
-  return total;
-};
-
 const CartPage: React.FC = () => {
   const { items, removeItem, clearCart, getTotalPrice } = useCart();
   const { user, authToken, setRedirectPath } = useAuth();
@@ -362,16 +354,10 @@ const CartPage: React.FC = () => {
                     <span className="text-gray-600">Processing fee</span>
                     <span className="text-gray-900">€0.00</span>
                   </div>
-                  {items.length >= 3 && (
-  <div className="flex justify-between text-sm text-green-700">
-    <span>Discount (30% off)</span>
-    <span>-€{(getTotalPrice() - getDiscountedPrice(items, getTotalPrice)).toFixed(2)}</span>
-  </div>
-)}
                   <div className="border-t border-gray-200 pt-3">
                     <div className="flex justify-between text-lg font-semibold">
                       <span className="text-gray-900">Total</span>
-                      <span className="text-gray-900">€{getDiscountedPrice(items, getTotalPrice).toFixed(2)}</span>
+                      <span className="text-gray-900">€{getTotalPrice().toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
