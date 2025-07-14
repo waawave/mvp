@@ -10,6 +10,7 @@ interface SurfSchool {
   id: number;
   name: string;
   Location_name: string;
+  logo: string;
 }
 
 interface SessionFiltersProps {
@@ -223,9 +224,11 @@ const SessionFilters: React.FC<SessionFiltersProps> = ({ onLocationFilter, onTag
                           onClick={() => handleSurfSchoolSelect(surfSchool)}
                         >
                           <div className="flex items-center">
-                            <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                            </svg>
+                            <img 
+  src={surfSchool.logo.url} 
+  alt={`${surfSchool.name} logo`}
+  className="w-8 h-8 mr-2 rounded-full object-cover"
+/>
                             <div>
                               <div className="font-medium">{surfSchool.name}</div>
                               <div className="text-sm text-gray-500">{surfSchool.Location_name}</div>
