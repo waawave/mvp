@@ -77,7 +77,7 @@ const Footer: React.FC = () => {
                 <li>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-4 mt-8">Follow us</h3>
-                    <Link to="https://instagram.com" className="text-gray-500 hover:text-blue-600 transition-colors">
+                    <Link to="https://instagram.com/waawave_" className="text-gray-500 hover:text-blue-600 transition-colors">
                       <Instagram size={24} />
                     </Link>
                   </div>
