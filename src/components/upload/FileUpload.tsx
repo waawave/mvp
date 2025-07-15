@@ -25,7 +25,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
     maxSessionSize: 1 * 1024 * 1024 * 1024, // 1GB
     maxFiles: 150,
     maxFileSize: 20 * 1024 * 1024, // 20MB
-    minImageResolution: 12, // 12MP
+    minImageResolution: 8, // 8MP
     minVideoResolution: 1080, // 1080p
     supportedImageFormats: ['image/jpeg', 'image/png', 'image/heic'],
     supportedVideoFormats: ['video/mp4', 'video/mov']
@@ -51,7 +51,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
   const validateImageResolution = (width: number, height: number): string | null => {
     const megapixels = (width * height) / 1000000;
     if (megapixels < VALIDATION_RULES.minImageResolution) {
-      return 'Image quality too low (minimum 12MP required)';
+      return 'Image quality too low (minimum 8MP required)';
     }
     return null;
   };
@@ -431,7 +431,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
         <div className="mt-6 text-sm text-gray-500 space-y-1">
           <p>Supported formats: JPEG, PNG, HEIC, MP4, MOV</p>
           <p>Maximum session size: 1GB • Min 20 files, Max 150 files • Max 20MB per file</p>
-          <p>For optimal quality: Photos minimum 12MP, Videos minimum 1080p resolution</p>
+          <p>For optimal quality: Photos minimum 8MP, Videos minimum 1080p resolution</p>
         </div>
       </div>
 
