@@ -25,7 +25,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, photographerName
     maxSessionSize: 1 * 1024 * 1024 * 1024, // 1GB
     maxFiles: 150,
     maxFileSize: 20 * 1024 * 1024, // 20MB
-    minImageResolution: 1, // 8MP
+    minImageResolution: 0, // 8MP
     minVideoResolution: 1080, // 1080p
     supportedImageFormats: ['image/jpeg', 'image/png', 'image/heic'],
     supportedVideoFormats: ['video/mp4', 'video/mov']
