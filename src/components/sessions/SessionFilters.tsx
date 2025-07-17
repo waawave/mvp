@@ -208,7 +208,7 @@ const SessionFilters: React.FC<SessionFiltersProps> = ({ onLocationFilter, onTag
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
   </svg>
   <span>{location.name}</span>
-  <span className="font-extralight text-gray-600">&nbsp;· Costa de Caparica</span>
+  <span className="font-extralight text-gray-600">&nbsp;· Caparica</span>
 </div>
                         </button>
                       ))}
