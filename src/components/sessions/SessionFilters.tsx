@@ -120,7 +120,7 @@ const SessionFilters: React.FC<SessionFiltersProps> = ({ onLocationFilter, onTag
   return (
     <div className="space-y-6">
       {/* Main title */}
-      <h1 className="text-4xl font-bold text-center text-gray-900">Find your waves</h1>
+      <h1 className="text-4xl font-bold text-center text-gray-900">Find Your Surf Photos</h1>
       
       {/* Filter container */}
       <div className="max-w-[50rem] mx-auto">
