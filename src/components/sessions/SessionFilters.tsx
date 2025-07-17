@@ -31,8 +31,11 @@ const SessionFilters: React.FC<SessionFiltersProps> = ({ onLocationFilter, onTag
   // Hardcoded locations based on requirements
   const locations: Location[] = [
     { id: 10, name: 'Praia do CDS' },
-    { id: 9, name: 'Praia do Traquínio' },
-    { id: 11, name: 'Praia do Marcelino' }
+    { id: 9, name: 'Praia do Tarquínio' },
+    { id: 11, name: 'Praia do Marcelino' },
+    { id: 12, name: 'Praia do Norte' },
+    { id: 13, name: 'São João' },
+    { id: 14, name: 'Cova do Vapor' }
   ];
 
   useEffect(() => {
@@ -199,13 +202,14 @@ const SessionFilters: React.FC<SessionFiltersProps> = ({ onLocationFilter, onTag
                           className="w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                           onClick={() => handleLocationSelect(location)}
                         >
-                          <div className="flex items-center">
-                            <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                            {location.name}, Caparica
-                          </div>
+<div className="flex items-center">
+  <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+  </svg>
+  <span>{location.name}</span>
+  <span className="font-extralight text-gray-600">&nbsp;· Costa de Caparica</span>
+</div>
                         </button>
                       ))}
                     </>
