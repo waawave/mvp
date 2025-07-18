@@ -146,7 +146,10 @@ const UploadSession: React.FC = () => {
   const locations = [
     { id: 10, name: 'Praia do CDS' },
     { id: 9, name: 'Praia do Traquínio' },
-    { id: 11, name: 'Praia do Marcelino' }
+    { id: 11, name: 'Praia do Marcelino' },
+    { id: 12, name: 'Praia do Norte' },
+    { id: 13, name: 'São João' },
+    { id: 14, name: 'Cova do Vapor' }
   ];
 
   const getValidationErrors = (): string[] => {
